@@ -39,6 +39,7 @@ export default function Home() {
             <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Courses</Link></li>
             <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Admissions</Link></li>
             <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>CSS Past Papers</Link></li>
+            <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Blog</Link></li>
             <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>About Us</Link></li>
             <li className="px-5 py-2 flex justify-center text-center border-gray-500"><Link href={'#'}>Contact</Link></li>
           </ul>
