@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Brand Red */
+  --color-brand-red-50: #fdeaeb;
+  --color-brand-red-100: #fbd5d7;
+  --color-brand-red-200: #f6abaf;
+  --color-brand-red-300: #f08286;
+  --color-brand-red-400: #c34e53;
+  --color-brand-red: #9b1e24;
+  --color-brand-red-600: #851a1f;
+  --color-brand-red-700: #70161b;
+  --color-brand-red-800: #5a1216;
+  --color-brand-red-900: #450e11;
+  --color-brand-red-1000: #300a0c;
+
+  /* Brand Yellow */
+  --color-brand-yellow-50: #fffce0;
+  --color-brand-yellow-100: #fff9c2;
+  --color-brand-yellow-200: #fff7a3;
+  --color-brand-yellow-300: #fff485;
+  --color-brand-yellow-400: #ffeb43;
+  --color-brand-yellow: #ffe401;
+  --color-brand-yellow-600: #d6bf01;
+  --color-brand-yellow-700: #ae9a01;
+  --color-brand-yellow-800: #867601;
+  --color-brand-yellow-900: #5e5101;
+  --color-brand-yellow-1000: #362d00;
+
+  /* Brand White */
+  --color-brand-white: #f5f2ed;
+
+  /* Brand Blue */
+  --color-brand-blue-50: #e6e7ed;
+  --color-brand-blue-100: #cdcfdb;
+  --color-brand-blue-200: #9b9fb7;
+  --color-brand-blue-300: #696f93;
+  --color-brand-blue-400: #383f6f;
+  --color-brand-blue: #0c1438;
+  --color-brand-blue-600: #0a1130;
+  --color-brand-blue-700: #080e28;
+  --color-brand-blue-800: #060b20;
+  --color-brand-blue-900: #050818;
+  --color-brand-blue-1000: #030510;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* utilities */
+@utility eduma-header-bg {
+  background-color: #2a4856;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility header-gradient {
+  /* background: #2A4856;
+  background: linear-gradient(90deg, rgba(42, 72, 86, 1) 0%, rgba(33, 57, 66, 1) 35%); */
+  background: #0C1438;
+  background: linear-gradient(90deg, rgba(12, 20, 56, 1) 0%, rgba(7, 14, 36, 1) 100%);
 }
