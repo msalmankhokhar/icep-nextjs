@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import 'swiper/css';
+@import 'swiper/css/autoplay';
+@import 'swiper/css/effect-fade';
 
 @theme {
   /* Brand Red */
@@ -45,8 +48,13 @@
 }
 
 /* utilities */
+
 @utility eduma-header-bg {
   background-color: #2a4856;
+}
+
+@utility cepi-menu-bg-yellow {
+  background-color: #ffc02b;
 }
 
 @utility header-gradient {
@@ -54,4 +62,13 @@
   background: linear-gradient(90deg, rgba(42, 72, 86, 1) 0%, rgba(33, 57, 66, 1) 35%); */
   background: #0C1438;
   background: linear-gradient(90deg, rgba(12, 20, 56, 1) 0%, rgba(7, 14, 36, 1) 100%);
+}
+
+@utility about-gradient {
+  background: #1b4152;
+  background: linear-gradient(123deg, rgba(27, 65, 82, 1) 0%, rgba(12, 20, 56, 1) 50%);
+}
+
+@utility btn {
+  @apply cursor-pointer px-6 py-3 rounded-md text-sm font-medium border-[1.5px] border-transparent transition-colors duration-200;
 }
