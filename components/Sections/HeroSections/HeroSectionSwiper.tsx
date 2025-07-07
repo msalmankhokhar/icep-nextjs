@@ -47,7 +47,7 @@ export default function HeroSectionSwiper() {
       {/* TEXT Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-white text-center">
         <motion.h1
-          className="text-4xl md:text-5xl font-bold leading-tight max-w-3xl"
+          className="text-4xl md:text-5xl font-bold leading-tight max-w-3xl heading-font"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}

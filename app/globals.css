@@ -72,3 +72,7 @@
 @utility btn {
   @apply cursor-pointer px-6 py-3 rounded-md text-sm font-medium border-[1.5px] border-transparent transition-colors duration-200;
 }
+
+@utility heading-font {
+  font-family: 'Playfair Display', serif;
+}

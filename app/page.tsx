@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LuMail, LuPhone } from "react-icons/lu";
 import AboutSectionOne from "@/components/Sections/AboutSections/AboutSectionOne";
 import AboutSectionTwo from "@/components/Sections/AboutSections/AboutSectionTwo";
+import CampusLifeSection from "@/components/Sections/CampusLifeSection";
 
 export default function Home() {
   return (
@@ -55,6 +56,8 @@ export default function Home() {
 
         <AboutSectionOne />
         <AboutSectionTwo />
+
+        <CampusLifeSection />
 
       </main>
     </>

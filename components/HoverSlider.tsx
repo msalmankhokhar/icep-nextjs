@@ -3,14 +3,15 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const images = [
-  "/images/header-slider/1.jpg",
-  "/images/header-slider/2.jpg",
-  "/images/header-slider/3.jpg",
+  "/images/campus-life/1.jpg",
+  "/images/campus-life/2.jpg",
+  "/images/campus-life/3.jpg",
+  "/images/campus-life/4.jpg",
 ];
 
 export default function HoverSlider() {
   return (
-    <div className="flex h-[400px] overflow-hidden">
+    <div className="flex h-[400px] overflow-hidden rounded-xl">
       {images.map((src, index) => (
         <motion.div
           key={index}

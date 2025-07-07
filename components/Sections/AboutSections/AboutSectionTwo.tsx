@@ -9,7 +9,7 @@ export default function AboutSectionTwo() {
     <section className="about-gradient py-20 px-6 md:px-12 lg:px-24">
       <div className="max-w-6xl mx-auto text-center">
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
+          className="text-3xl md:text-4xl font-bold text-white mb-4 heading-font"
           initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}

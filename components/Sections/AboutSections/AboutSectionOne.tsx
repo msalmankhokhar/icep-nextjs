@@ -33,7 +33,7 @@ export default function AboutSectionOne() {
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-extrabold text-brand-blue mb-4">
+          <h2 className="text-3xl md:text-4xl heading-font font-extrabold text-brand-blue mb-4">
             ICEP CSS & PMS Institute
           </h2>
           <p className="text-brand-blue-300 text-base leading-relaxed mb-4">
