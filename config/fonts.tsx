@@ -1,7 +1,8 @@
-import { Playfair_Display } from "next/font/google";
+import { Lora as HeadingFontFunction } from "next/font/google";
 
-export const headingFont = Playfair_Display({
+export const headingFont = HeadingFontFunction({
     subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800"],
+    weight: ["400", "500", "600", "700"],
     variable: "--font-heading",
+    display: "swap",
 });

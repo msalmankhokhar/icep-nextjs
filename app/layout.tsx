@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { DM_Sans as Font } from "next/font/google";
+import { Roboto as Font } from "next/font/google";
+import { headingFont } from "@/config/fonts";
 import "./globals.css";
 
 const font = Font({
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${font.className} antialiased`}
+        className={`${font.className} ${headingFont.variable} antialiased`}
       >
         {children}
       </body>

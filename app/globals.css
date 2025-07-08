@@ -45,12 +45,23 @@
   --color-brand-blue-800: #060b20;
   --color-brand-blue-900: #050818;
   --color-brand-blue-1000: #030510;
+
+
+  --color-brand-dark: #001220;
+
+  /* fonts */
+  --font-heading: 'Lora', serif;
 }
 
 /* utilities */
 
 @utility eduma-header-bg {
   background-color: #2a4856;
+}
+
+@utility footer-bg {
+  @apply absolute top-0 bottom-0 left-0 right-0 w-full h-full bg-no-repeat bg-cover bg-center z-[-1];
+  background-image: url('/images/footer/footer-bg.svg');
 }
 
 @utility cepi-menu-bg-yellow {
@@ -74,5 +85,5 @@
 }
 
 @utility heading-font {
-  font-family: 'Playfair Display', serif;
+  @apply font-heading;
 }

@@ -5,6 +5,7 @@ import { LuMail, LuPhone } from "react-icons/lu";
 import AboutSectionOne from "@/components/Sections/AboutSections/AboutSectionOne";
 import AboutSectionTwo from "@/components/Sections/AboutSections/AboutSectionTwo";
 import CampusLifeSection from "@/components/Sections/CampusLifeSection";
+import Footer from "@/components/Sections/Footer";
 
 export default function Home() {
   return (
@@ -60,6 +61,8 @@ export default function Home() {
         <CampusLifeSection />
 
       </main>
+
+      <Footer/>
     </>
   );
 }
