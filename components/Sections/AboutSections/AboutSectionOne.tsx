@@ -1,8 +1,10 @@
 // components/AboutSectionOne.tsx
 'use client';
 
+import { phoneNumber } from '@/Constants';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function AboutSectionOne() {
   return (
@@ -44,12 +46,12 @@ export default function AboutSectionOne() {
             <li>Interactive classes with real exam simulations</li>
             <li>Tailored mentorship for every aspirant</li>
           </ul>
-          <a
-            href="#"
+          <Link
+            href={`tel:${phoneNumber.withCountryCode}`}
             className="btn bg-brand-blue/85 text-white hover:bg-brand-blue/75"
           >
-            📞 Contact Us: 0322 2077774
-          </a>
+            📞 Contact Us: {phoneNumber.withoutCountryCode}
+          </Link>
         </motion.div>
       </div>
     </section>
