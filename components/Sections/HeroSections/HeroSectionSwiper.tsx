@@ -63,7 +63,7 @@ export default function HeroSectionSwiper() {
           transition={{ duration: 1 }}
         >
           {/* text-[#ff0000] for css */}
-          Kick Start your <span className="bg-brand-yellow mx-0.5 text-black px-4 rounded"><span>CSS</span> <span className="">2026</span></span> Journey with Us
+          Kick Start your <span className="bg-brand-yellow mx-0.5 text-black px-4 rounded text-nowrap"><span>CSS</span> <span className="">2026</span></span> Journey with Us
         </motion.h1>
 
         <motion.p
