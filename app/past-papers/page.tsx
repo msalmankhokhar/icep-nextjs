@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Topbar from '@/components/Topbar';
 import Footer from '@/components/Sections/Footer';
 import SubjectCard from '@/components/SubjectCard';
-import { getAllSubjects, getPapersBySubject } from '@/utils/pastPapersUtils';
+import { getAllSubjects, getPapersBySubject } from '@/utils/pastPapersServerUtils';
 import { 
   PiExamBold, 
   PiBookOpenTextBold, 
@@ -67,8 +67,8 @@ export default async function PastPapersPage() {
             <h2 className="text-3xl font-bold heading-font text-brand-blue mb-8">
               Select a Subject
             </h2>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">              {subjects.map(async (subject, index) => {
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {subjects.map(async (subject, index) => {
                 const papers = await getPapersBySubject(subject);
                 const paperCount = papers.length;
                 return (

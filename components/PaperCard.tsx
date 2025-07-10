@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { PiFilePdf } from 'react-icons/pi';
-import { formatSubjectForUrl } from '@/utils/pastPapersUtils';
+import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 import type { PastPaper } from '@/utils/pastPapersUtils';
 
 interface PaperCardProps {

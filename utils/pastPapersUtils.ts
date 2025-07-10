@@ -1,12 +1,20 @@
 // utils/pastPapersUtils.ts
-// This file now re-exports utilities from both server and client files
-// to maintain backward compatibility while fixing the fs module error
+// This file re-exports everything from pastPapersTypes and pastPapersServerUtils
+// to maintain compatibility with existing imports
 
 // Re-export types
 export type { PastPaper } from './pastPapersTypes';
 
-// Re-export client utilities
-export { formatSubjectForUrl, getSubjectFromUrl } from './pastPapersTypes';
+// Re-export utility functions
+export { 
+  formatSubjectForUrl, 
+  getSubjectFromUrl 
+} from './pastPapersTypes';
 
-// Re-export server utilities
-export { getAllPastPapers, getPapersBySubject, getPaperById, getAllSubjects } from './pastPapersServerUtils';
+// Re-export server functions
+export { 
+  getAllPastPapers, 
+  getPapersBySubject, 
+  getPaperById, 
+  getAllSubjects 
+} from './pastPapersServerUtils';

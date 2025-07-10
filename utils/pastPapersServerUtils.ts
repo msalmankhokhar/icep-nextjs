@@ -1,18 +1,8 @@
 // utils/pastPapersServerUtils.ts
-'use server'
-import fs from 'fs';
-import path from 'path';
-
-// Define the structure of a past paper for server-side only
-interface PastPaper {
-  id: string;
-  title: string;
-  subject: string;
-  year: string;
-  yearRange: string;
-  filePath: string;
-  fileUrl: string;
-}
+import 'server-only';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { PastPaper } from './pastPapersTypes';
 
 // Map file names to cleaner subject names
 const subjectNameMap: Record<string, string> = {

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { formatSubjectForUrl } from '@/utils/pastPapersUtils';
+import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 
 interface SubjectCardProps {
   subject: string;

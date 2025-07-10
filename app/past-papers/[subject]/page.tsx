@@ -5,12 +5,12 @@ import Footer from '@/components/Sections/Footer';
 import PaperCard from '@/components/PaperCard';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
-import { 
-  getPapersBySubject, 
+import {  
   getSubjectFromUrl, 
-  getAllSubjects, 
   formatSubjectForUrl 
-} from '@/utils/pastPapersUtils';
+} from '@/utils/pastPapersTypes';
+
+import { getPapersBySubject , getAllSubjects} from '@/utils/pastPapersServerUtils';
 
 export const dynamicParams = true;
 
@@ -23,8 +23,10 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { subject: string } }) {
+  // Make sure to use promise here to avoid Next.js warnings
+  const subjectParam = await Promise.resolve(params.subject);
   const subjects = await getAllSubjects();
-  const subject = getSubjectFromUrl(params.subject, subjects);
+  const subject = getSubjectFromUrl(subjectParam, subjects);
   
   if (!subject) {
     return {
@@ -39,9 +41,12 @@ export async function generateMetadata({ params }: { params: { subject: string }
 }
 
 export default async function SubjectPage({ params }: { params: { subject: string } }) {
+  // Make sure to use promise here to avoid Next.js warnings
+  const subjectParam = await Promise.resolve(params.subject);
+  
   // Get the actual subject name from the URL parameter
   const subjects = await getAllSubjects();
-  const subject = getSubjectFromUrl(params.subject, subjects);
+  const subject = getSubjectFromUrl(subjectParam, subjects);
   
   // If subject doesn't exist, show 404
   if (!subject) {

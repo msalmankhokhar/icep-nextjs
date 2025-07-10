@@ -125,7 +125,7 @@ export function MagazineAndBlog() {
 }
 
 import { PiExamBold, PiBookOpenTextBold, PiBrainBold, PiNewspaperClippingBold, PiFlagBold, PiHandsPrayingBold, PiBookBookmarkBold } from 'react-icons/pi';
-import { formatSubjectForUrl } from '@/utils/pastPapersUtils';
+import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 
 const compulsorySubjects = [
   { name: 'Essay', icon: PiBookOpenTextBold },
