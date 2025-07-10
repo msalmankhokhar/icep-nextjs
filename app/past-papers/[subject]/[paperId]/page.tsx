@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getAllPastPapers, getPaperById } from '@/utils/pastPapersServerUtils';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
-import PDFViewer2 from '@/components/PDFViewer2';
+import PDFViewerSimple from '@/components/PDFViewerSimple';
 
 export const dynamicParams = true;
 
@@ -116,7 +116,7 @@ export default async function PaperPage({ params }: { params: { subject: string,
             
             {/* PDF viewer */}
             {/* <PaperViewerClient fileUrl={paper.fileUrl} /> */}
-            <PDFViewer2 pdfUrl={paper.fileUrl} />
+            <PDFViewerSimple pdfUrl={paper.fileUrl} />
           </div>
         </section>
         

@@ -1,6 +1,6 @@
     import React from 'react';
 
-    const PDFViewer2 = ({ pdfUrl }: { pdfUrl: string }) => {
+    const PDFViewerSimple = ({ pdfUrl }: { pdfUrl: string }) => {
       return (
         <div>
           <iframe src={pdfUrl} width="100%" height="500px" title="PDF Viewer" />
@@ -8,4 +8,4 @@
       );
     };
 
-    export default PDFViewer2;
+    export default PDFViewerSimple;
