@@ -125,6 +125,7 @@ export function MagazineAndBlog() {
 }
 
 import { PiExamBold, PiBookOpenTextBold, PiBrainBold, PiNewspaperClippingBold, PiFlagBold, PiHandsPrayingBold, PiBookBookmarkBold } from 'react-icons/pi';
+import { formatSubjectForUrl } from '@/utils/pastPapersUtils';
 
 const compulsorySubjects = [
   { name: 'Essay', icon: PiBookOpenTextBold },
@@ -151,26 +152,29 @@ export function PastPapersTeaser() {
           </h2>
           <p className="text-base mb-10">
             Access solved and unsolved past papers categorized by subject and year.
-          </p>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-6 mb-8">
+          </p>          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-6 mb-8">
             {compulsorySubjects.map((subject, index) => {
               const Icon = subject.icon;
+              const urlSubject = formatSubjectForUrl(subject.name);
               return (
-                <div key={index} className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2">
-                  <Icon className="text-3xl text-brand-yellow" />
-                  <span className="text-sm font-semibold text-center">
-                    {subject.name}
-                  </span>
-                </div>
+                <Link key={index} href={`/past-papers/${urlSubject}`}>
+                  <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-colors">
+                    <Icon className="text-3xl text-brand-yellow" />
+                    <span className="text-sm font-semibold text-center">
+                      {subject.name}
+                    </span>
+                  </div>
+                </Link>
               );
             })}
-            <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2">
-              <PiBookBookmarkBold className="text-3xl text-brand-yellow" />
-              <span className="text-sm font-semibold text-center">
-                Optional Subjects
-              </span>
-            </div>
+            <Link href="/past-papers">
+              <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-colors">
+                <PiBookBookmarkBold className="text-3xl text-brand-yellow" />
+                <span className="text-sm font-semibold text-center">
+                  Optional Subjects
+                </span>
+              </div>
+            </Link>
           </div>
 
           <Link

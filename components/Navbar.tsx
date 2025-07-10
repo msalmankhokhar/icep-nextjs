@@ -22,12 +22,11 @@ export default function Navbar() {
             {/* left-14 right-14 rounded */}
             {/* media query at 991px */}
             <div className="bg-brand-blue hidden min-[991px]:flex border-b border-white absolute -bottom-5 left-14 right-14 rounded items-center justify-between py-2">
-                <ul className="flex items-center uppercase text-white text-sm font-medium">
-                    <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Home</Link></li>
+                <ul className="flex items-center uppercase text-white text-sm font-medium">                    <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'/'}>Home</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Courses</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Success Stories</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>FAQs</Link></li>
-                    <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Past Papers</Link></li>
+                    <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'/past-papers'}>Past Papers</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>Magazine</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-r border-gray-500"><Link href={'#'}>About Us</Link></li>
                     <li className="px-5 py-2 flex justify-center text-center border-gray-500"><Link href={'#'}>Contact</Link></li>
