@@ -12,9 +12,20 @@ import {
 
 import { getPapersBySubject , getAllSubjects} from '@/utils/pastPapersServerUtils';
 
+// Define the structure of page params from dynamic route segments
+type PageParams = {
+  subject: string;
+}
+
+// Define Props type with correct searchParams type
+type Props = {
+  params: PageParams;
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 export const dynamicParams = true;
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<PageParams[]> {
   const subjects = await getAllSubjects();
   
   return subjects.map(subject => ({
@@ -22,7 +33,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: { subject: string } }) {
+export async function generateMetadata({ params }: Props) {
   // Make sure to use promise here to avoid Next.js warnings
   const subjectParam = await Promise.resolve(params.subject);
   const subjects = await getAllSubjects();
@@ -40,7 +51,7 @@ export async function generateMetadata({ params }: { params: { subject: string }
   };
 }
 
-export default async function SubjectPage({ params }: { params: { subject: string } }) {
+export default async function SubjectPage({ params }: Props) {
   // Make sure to use promise here to avoid Next.js warnings
   const subjectParam = await Promise.resolve(params.subject);
   

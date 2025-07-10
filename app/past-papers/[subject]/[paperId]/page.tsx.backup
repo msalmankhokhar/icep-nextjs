@@ -1,4 +1,6 @@
+// filepath: d:\Coding\Paid-Projects\icep-nextjs\app\past-papers\[subject]\[paperId]\page.tsx
 // app/past-papers/[subject]/[paperId]/page.tsx
+
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
@@ -10,19 +12,14 @@ import { getAllPastPapers, getPaperById } from '@/utils/pastPapersServerUtils';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 import PDFViewerSimple from '@/components/PDFViewerSimple';
 
-// Define the structure of page params from dynamic route segments
-type PageParams = {
-  subject: string;
-  paperId: string;
-}
-
-// Define Props type with correct searchParams type
 type Props = {
-  params: PageParams;
-  searchParams: { [key: string]: string | string[] | undefined };
-}
+  params: {
+    subject: string;
+    paperId: string;
+  };
+};
 
-export async function generateStaticParams(): Promise<PageParams[]> {
+export async function generateStaticParams() {
   const allPapers = await getAllPastPapers();
 
   return allPapers.map((paper) => ({
