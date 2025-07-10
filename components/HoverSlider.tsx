@@ -26,7 +26,7 @@ export default function HoverSlider() {
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             animate={{
-              flex: isActive ? 2 : 1,
+              flex: isActive ? 3 : 1,
               scale: isActive ? 1.05 : 1,
             }}
             transition={{ duration: 0.4 }}

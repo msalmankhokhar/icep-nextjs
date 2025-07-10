@@ -11,8 +11,9 @@ export default function AboutSectionOne() {
     <section className="relative bg-brand-white py-20 px-6 md:px-12 lg:px-24 overflow-hidden">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-12">
         {/* Left: Image */}
+        {/* h-72 to h-auto */}
         <motion.div
-          className="flex-1 relative w-full h-72 md:h-[450px]"
+          className="hidden md:block flex-1 relative w-full h-auto md:h-[450px]"
           initial={{ x: -50, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 0.8 }}

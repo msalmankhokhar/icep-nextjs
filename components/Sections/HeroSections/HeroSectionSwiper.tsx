@@ -22,7 +22,7 @@ export default function HeroSectionSwiper() {
   }, [controls]);
 
   return (
-    <section className="relative w-full h-[90vh] overflow-hidden">
+    <section className="relative w-full h-[400px] md:h-[90vh] overflow-hidden">
       {/* Swiper Slider */}
       <Swiper
         modules={[Autoplay]}
@@ -47,7 +47,7 @@ export default function HeroSectionSwiper() {
                   priority
                   className="object-cover object-center"
                 />
-                <div className="absolute inset-0 bg-black/60" />
+                <div className="absolute inset-0 bg-black/45 md:bg-black/60" />
               </motion.div>
             </div>
           </SwiperSlide>
@@ -57,12 +57,13 @@ export default function HeroSectionSwiper() {
       {/* Overlayed Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-white text-center">
         <motion.h1
-          className="text-4xl md:text-5xl font-bold leading-tight max-w-3xl heading-font"
+          className="text-4xl md:text-5xl font-bold leading-normal max-w-3xl heading-font"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Ready to Become a <span className="text-red-500">CSS</span> Topper?
+          {/* text-[#ff0000] for css */}
+          Kick Start your <span className="bg-brand-yellow mx-0.5 text-black px-4 rounded"><span>CSS</span> <span className="">2026</span></span> Journey with Us
         </motion.h1>
 
         <motion.p
