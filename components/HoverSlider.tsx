@@ -29,7 +29,7 @@ export default function HoverSlider() {
               flex: isActive ? 3 : 1,
               scale: isActive ? 1.05 : 1,
             }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.2 }}
             className="relative overflow-hidden transition-all duration-200 ease-linear"
           >
             <Image

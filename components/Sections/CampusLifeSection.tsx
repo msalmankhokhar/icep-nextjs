@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 
 export default function CampusLifeSection() {
   return (
-    <section className="bg-brand-white py-20 px-6 md:px-12 lg:px-24">
+    <section className="bg-white py-20 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto text-center mb-10">
         <motion.h2
           className="text-3xl md:text-4xl font-bold heading-font text-brand-blue mb-4"

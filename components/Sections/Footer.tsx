@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Logo from '../Logo';
 import Link from 'next/link';
 import { FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
-import { SiFacebook, SiInstagram, SiYoutube } from 'react-icons/si';
+import SocialIconsFooter from '../SocialIconsFooter';
 
 export default function Footer() {
     return (
@@ -27,17 +27,7 @@ export default function Footer() {
                     <p className="tracking-wider text-sm text-brand-blue-100 max-w-[250px] min-[1070px]:max-w-[260px]">
                         Join us and be part of a transformative journey toward success.
                     </p>
-                    <div className='flex w-full self-start mt-5 items-center gap-x-3'>
-                        <div className='size-[33px] rounded-full bg-brand-white text-blue-600 flex items-center justify-center'>
-                            <SiFacebook />
-                        </div>
-                        <div className='size-[33px] rounded-full bg-brand-white text-red-600 flex items-center justify-center'>
-                            <SiYoutube />
-                        </div>
-                        <div className='size-[33px] rounded-full bg-brand-white text-orange-500/70 flex items-center justify-center'>
-                            <SiInstagram />
-                        </div>
-                    </div>
+                    <SocialIconsFooter />
                 </motion.div>
 
                 {/* Info */}

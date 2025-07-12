@@ -38,7 +38,7 @@ export default function HeroSectionSwiper() {
                 className="relative w-full h-full"
                 initial={{ scale: 1.1 }}
                 animate={controls}
-                transition={{ duration: 2.5, ease: 'easeOut' }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
               >
                 <Image
                   src={src}
