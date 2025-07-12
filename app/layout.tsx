@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Roboto as Font } from "next/font/google";
+import { Figtree as Font } from "next/font/google";
 import { headingFont } from "@/config/fonts";
 import "./globals.css";
 import FloatingWhatsappBtn from "@/components/FloatingWhatsappBtn";
