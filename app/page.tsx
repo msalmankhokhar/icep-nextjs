@@ -5,7 +5,7 @@ import CampusLifeSection from "@/components/Sections/CampusLifeSection";
 import Footer from "@/components/Sections/Footer";
 import Topbar from "@/components/Topbar";
 import Navbar from "@/components/Navbar";
-import { AnnualPlan2026, CompulsorySubjectsTestSeries, CSSOverviewSection, MagazineAndBlog, PastPapersTeaser, TestSeriesJuly2026 } from "@/components/Sections/HomeSections";
+import { CSSOverviewSection, ProgramsAndCourses, TestSeriesSection, MagazineAndBlog, PastPapersTeaser, OurResults } from "@/components/Sections/HomeSections";
 
 export default function Home() {
   return (
@@ -16,16 +16,14 @@ export default function Home() {
       <main>
         <HeroSectionSwiper />
         <AboutSectionOne />
-        <AboutSectionTwo />
         <CampusLifeSection />
-        
+        <AboutSectionTwo />
         <CSSOverviewSection />
-        <TestSeriesJuly2026 />
-        <CompulsorySubjectsTestSeries />
-        <AnnualPlan2026 />
+        <ProgramsAndCourses />
+        <TestSeriesSection />
+        <OurResults />
         <MagazineAndBlog />
         <PastPapersTeaser />
-
       </main>
 
       <Footer />
