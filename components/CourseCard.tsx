@@ -80,7 +80,7 @@ export default function CourseCard({
           </div>
 
           <div className={`${poster ? 'mt-4 pt-4' : 'mt-6 pt-6'} border-t border-white/20`}>
-            <button className="w-full bg-white text-brand-blue hover:bg-gray-100 font-semibold py-3 px-6 rounded-lg transition-colors">
+            <button className="btn w-full bg-white text-brand-blue hover:bg-gray-100">
               Learn More
             </button>
           </div>

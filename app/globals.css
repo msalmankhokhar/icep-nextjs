@@ -82,7 +82,7 @@
 }
 
 @utility btn {
-  @apply cursor-pointer px-6 py-3 rounded-md text-sm font-medium border-[1.5px] border-transparent transition-colors duration-200;
+  @apply cursor-pointer w-fit flex items-center justify-center font-semibold rounded-lg transition-colors px-6 py-3;
 }
 
 @utility heading-font {
@@ -113,4 +113,14 @@
 
 .results-swiper .swiper-pagination-bullet-active {
   background: #0c1438 !important;
+}
+
+/* Floating Whatsapp */
+.styles-module_floatingWhatsapp__yWF5K.floating-whatsapp header.styles-module_chatHeader__gaeOA {
+  display: flex;
+}
+.styles-module_floatingWhatsapp__yWF5K.floating-whatsapp header.styles-module_chatHeader__gaeOA > div.styles-module_close__RLouK {
+  top: 0.25rem;
+  right: 0.25rem;
+  position: absolute;
 }

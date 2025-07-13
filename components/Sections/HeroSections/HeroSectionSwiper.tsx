@@ -76,20 +76,20 @@ export default function HeroSectionSwiper() {
         </motion.p>
 
         <motion.div
-          className="mt-6 flex flex-wrap justify-center gap-4"
+          className="mt-6 self-stretch flex flex-col items-center min-[380px]:flex-row justify-center gap-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
           <a
             href="#courses"
-            className="bg-red-700 hover:bg-red-700/90 text-white btn"
+            className="bg-red-700 text-nowrap w-full max-w-[270px] min-[380px]:w-auto hover:bg-red-700/90 text-white btn"
           >
             Explore Courses
           </a>
           <a
             href="#contact"
-            className="border text-brand-blue bg-brand-white hover:bg-white hover:text-black btn"
+            className="border text-nowrap w-full max-w-[270px] min-[380px]:w-auto text-brand-blue bg-brand-white hover:bg-white hover:text-black btn"
           >
             📞 Contact Us
           </a>

@@ -458,10 +458,10 @@ export function ProgramsAndCourses() {  const programs = [
               Join thousands of successful candidates who achieved their dreams with ICEP Institute
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/courses" className="bg-brand-yellow text-brand-blue font-semibold px-8 py-3 rounded-lg hover:bg-brand-yellow-400 transition">
+              <Link href="/courses" className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-400">
                 View All Programs
               </Link>
-              <Link href="/contact" className="border-2 border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-brand-blue transition">
+              <Link href="/contact" className="btn border-2 border-white text-white hover:bg-white hover:text-brand-blue">
                 Contact Admissions
               </Link>
             </div>
