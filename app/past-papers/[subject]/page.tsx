@@ -27,11 +27,11 @@ export const dynamicParams = true;
 
 export async function generateStaticParams(): Promise<PageParams[]> {
   const subjectsObject = await getAllSubjects();
-  // const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
+  const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
   // const compulsoryCSSSubjects = subjectsObject.css.comp;
   // const optionalCSSSubjects = subjectsObject.css.optional;
   
-  return [...subjectsObject.css.comp, ...subjectsObject.css.optional].map(subject => ({
+  return subjects.map(subject => ({
     subject: formatSubjectForUrl(subject.name)
   }));
 }
@@ -63,6 +63,7 @@ export default async function SubjectPage({ params }: Props) {
   const subjectsObject = await getAllSubjects();
   const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
   const subject = getSubjectFromUrl(subjectParam, subjects.map(subject => subject.name));
+  console.log('found subject', subject);
   
   // If subject doesn't exist, show 404
   if (!subject) {
@@ -71,6 +72,7 @@ export default async function SubjectPage({ params }: Props) {
   
   // Get papers for this subject
   const papers = await getPapersBySubject(subject);
+  console.log('found papers for this subject', papers);
   
   return (
     <>

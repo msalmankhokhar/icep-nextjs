@@ -27,6 +27,7 @@ export default async function PastPapersPage() {
   // Get all unique subjects
   const subjectsObject = await getAllSubjects();
   const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
+  console.log(subjectsObject);
   
   // Map icons to subjects
   const subjectIcons: Record<string, React.ReactNode> = {

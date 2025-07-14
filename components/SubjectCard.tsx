@@ -12,7 +12,7 @@ interface SubjectCardProps {
 }
 
 const SubjectCard = ({ subject, icon, count, index }: SubjectCardProps) => {
-  const urlSubject = formatSubjectForUrl(subject);
+  const urlEncodedSubject = formatSubjectForUrl(subject);
   
   return (
     <motion.div
@@ -20,7 +20,7 @@ const SubjectCard = ({ subject, icon, count, index }: SubjectCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.05 }}
     >
-      <Link href={`/past-papers/${urlSubject}`}>
+      <Link href={`/past-papers/${urlEncodedSubject}`}>
         <div className="bg-brand-blue text-brand-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-5 h-full flex flex-col items-center justify-center gap-3">
           {icon && <div className="text-3xl text-brand-yellow mb-2">{icon}</div>}
           
