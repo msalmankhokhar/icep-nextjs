@@ -73,10 +73,9 @@ export default function Navbar() {
         setIsMobileMenuOpen(false);
     };
     return (
-        <nav className={`text-black px-5 min-[440px]:px-14 z-[11] transition-all duration-300 ease-in-out ${
+        <nav className={`text-black bg-brand-white px-5 min-[440px]:px-14 relative z-[11] transition-all duration-300 ease-in-out ${
             isScrolled 
-                ? `fixed top-0 left-0 right-0 ${isVisible ? 'translate-y-0' : '-translate-y-[162px]'}` 
-                : 'relative'
+                && `relative min-[991px]:fixed min-[991px]:top-0 min-[991px]:left-0 min-[991px]:right-0 ${isVisible ? 'min-[991px]:translate-y-0' : 'min-[991px]:-translate-y-[162px]'}` 
             } ${isScrolled
                 ? 'bg-white backdrop-blur-md shadow-lg'
                 : 'bg-white backdrop-blur-sm shadow-sm'
@@ -124,20 +123,19 @@ export default function Navbar() {
                         <Link className='' href={'/contact'}>Contact</Link>
                     </li>
                 </ul>
-            </div>            {/* Mobile Menu Overlay */}
+            </div>
+
+            {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-[60] min-[991px]:hidden"
+                    className="fixed inset-0 bg-black/50 z-50 min-[991px]:hidden"
                     onClick={closeMobileMenu}
                 ></div>
-            )}            {/* Mobile Side Menu */}
-            <div
-                className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[100000] transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-                    }`}
-                style={{
-                    transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(100%)'
-                }}
-            >
+            )}
+
+            {/* Mobile Side Menu */}
+            <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                }`}>
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-200">
                     <Logo />
@@ -147,7 +145,7 @@ export default function Navbar() {
                     >
                         <HiX size={24} />
                     </button>
-                </div>{/* Mobile Menu Links */}
+                </div>                {/* Mobile Menu Links */}
                 <div className="py-6">
                     <ul className="space-y-2">
                         <li>
