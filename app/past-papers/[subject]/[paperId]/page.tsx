@@ -8,6 +8,7 @@ import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getAllPastPapers, getPaperById } from '@/utils/pastPapersServerUtils';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 import PDFViewerWrapper from '@/components/PDFViewerWrapper';
+import ViewCounter from '@/components/ViewCounter';
 
 // Define the structure of page params from dynamic route segments
 type PageParams = {
@@ -80,11 +81,12 @@ export default async function PaperPage({ params }: Props) {
               Examination Years: <span className="font-semibold">{paper.yearRange}</span>
             </p>
           </div>
-        </section>
-
-        {/* PDF Viewer */}
+        </section>        {/* PDF Viewer */}
         <section className="py-8">
           <div className="container mx-auto px-4 md:px-12">
+            {/* View Counter */}
+            <ViewCounter paperId={paper.id} subjectName={paper.subject.name} />
+            
             <div className="bg-white p-4 md:p-6 rounded-lg shadow-md border border-brand-blue-100 mb-6">
               <h2 className="text-xl font-bold heading-font text-brand-blue mb-4">Paper Details</h2>
 
