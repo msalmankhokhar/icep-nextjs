@@ -324,14 +324,14 @@ export function MagazineAndBlog() {
 
 export function PastPapersTeaser() {
   return (
-    <section className="py-20 bg-white text-black px-6 md:px-12 lg:px-20">
+    <section className="py-20 bg-white text-black px-4 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="p-8 rounded-xl bg-brand-white shadow-lg"
+          className="p-5 sm:p-8 rounded-xl bg-brand-white shadow-lg"
         >
           <h2 className="text-3xl md:text-4xl font-bold heading-font mb-3">
             CSS & PMS Past Papers
@@ -352,7 +352,7 @@ export function PastPapersTeaser() {
                     <p className="text-brand-blue-100">Central Superior Services</p>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm">
                   <div className="bg-white/10 rounded p-2">
                     <span className="font-semibold">6</span> Compulsory
                   </div>
@@ -374,7 +374,7 @@ export function PastPapersTeaser() {
                     <p className="text-green-100">Provincial Management Service</p>
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 text-sm">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm">
                   <div className="bg-white/10 rounded p-2">
                     <span className="font-semibold">4</span> Compulsory
                   </div>

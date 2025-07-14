@@ -66,7 +66,7 @@ export default async function CSSPastPapersPage() {
               <Link href="/past-papers" className="text-brand-blue-200 hover:text-white transition-colors">
                 <PiArrowLeftBold className="text-xl" />
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold heading-font">
+              <h1 className="text-3xl md:text-4xl font-bold heading-font">
                 CSS Past Papers
               </h1>
             </div>

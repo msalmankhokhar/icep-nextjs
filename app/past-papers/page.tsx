@@ -28,17 +28,16 @@ export default async function PastPapersPage() {
         <section className="bg-brand-blue text-white py-16 md:py-24">
           <div className="container mx-auto px-6 md:px-12">
             <h1 className="text-4xl md:text-5xl font-bold heading-font mb-4">
-              CSS & PMS Past Papers
+              Past Papers
             </h1>
             <p className="text-brand-blue-100 text-lg max-w-3xl">
               Choose your examination type to access a comprehensive collection of past papers. 
-              Practice with real exam questions to enhance your preparation.
             </p>
           </div>
         </section>
         
         {/* Exam Options */}
-        <section className="py-20 bg-brand-white">
+        <section className="py-10 bg-brand-white">
           <div className="container mx-auto px-6 md:px-12">
             <h2 className="text-3xl font-bold heading-font text-brand-blue mb-12 text-center">
               Select Your Examination

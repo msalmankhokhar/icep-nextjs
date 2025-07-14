@@ -74,7 +74,7 @@ export default async function PMSPastPapersPage() {
               <Link href="/past-papers" className="text-green-200 hover:text-white transition-colors">
                 <PiArrowLeftBold className="text-xl" />
               </Link>
-              <h1 className="text-4xl md:text-5xl font-bold heading-font">
+              <h1 className="text-3xl md:text-4xl font-bold heading-font">
                 PMS Past Papers
               </h1>
             </div>
