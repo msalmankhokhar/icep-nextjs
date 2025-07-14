@@ -76,6 +76,15 @@ const compulsorySubjects = [
   { name: 'Islamic Studies / Comparative Religion', icon: PiHandsPrayingBold },
 ];
 
+const optionalSubjects = [
+  { name: 'International Relations', icon: PiBrainBold },
+  { name: 'Political Science', icon: PiExamBold },
+  { name: 'Environmental Science', icon: PiBookOpenTextBold },
+  { name: 'Governance & Public Policies', icon: PiNewspaperClippingBold },
+  { name: 'Indo Pak History', icon: PiFlagBold },
+  { name: 'Punjabi', icon: PiHandsPrayingBold },
+];
+
 export function CSSOverviewSection() {
   return (
     <section className="py-20 bg-gradient-to-br from-brand-blue-50 to-brand-white text-brand-blue px-6 md:px-12 lg:px-20">
@@ -338,37 +347,79 @@ export function PastPapersTeaser() {
           </h2>
           <p className="text-base mb-10">
             Access solved and unsolved past papers categorized by subject and year.
-          </p>          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-6 mb-8">
-            {compulsorySubjects.map((subject, index) => {
-              const Icon = subject.icon;
-              const urlSubject = formatSubjectForUrl(subject.name);
-              return (
-                <Link key={index} href={`/past-papers/${urlSubject}`}>
-                  <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-colors">
-                    <Icon className="text-3xl text-brand-yellow" />
-                    <span className="text-sm font-semibold text-center">
-                      {subject.name}
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
-            <Link href="/past-papers">
-              <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 sm:p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-colors">
-                <PiBookBookmarkBold className="text-3xl text-brand-yellow" />
-                <span className="text-sm font-semibold text-center">
-                  Optional Subjects
-                </span>
-              </div>
-            </Link>
+          </p>
+
+          {/* Compulsory Subjects Section */}
+          <div className="mb-10">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-brand-blue rounded-full"></div>
+              <h3 className="text-2xl font-bold text-brand-blue">Compulsory Subjects</h3>
+              <div className="flex-1 h-px bg-brand-blue-200"></div>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 mb-6">
+              {compulsorySubjects.map((subject, index) => {
+                const Icon = subject.icon;
+                const urlSubject = formatSubjectForUrl(subject.name);
+                return (
+                  <Link key={index} href={`/past-papers/${urlSubject}`}>
+                    <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105">
+                      <Icon className="text-2xl text-brand-yellow" />
+                      <span className="text-sm font-semibold text-center">
+                        {subject.name}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
           </div>
 
-          <Link
-            href="/past-papers"
-            className="inline-block bg-black text-brand-white font-semibold px-5 py-2 rounded-md hover:bg-gray-900 transition"
-          >
-            → View All Past Papers
-          </Link>
+          {/* Optional Subjects Section */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-1 h-8 bg-brand-yellow rounded-full"></div>
+              <h3 className="text-2xl font-bold text-brand-blue">Optional Subjects</h3>
+              <div className="flex-1 h-px bg-brand-blue-200"></div>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
+              {optionalSubjects.map((subject, index) => {
+                const Icon = subject.icon;
+                const urlSubject = formatSubjectForUrl(subject.name);
+                return (
+                  <Link key={index} href={`/past-papers/${urlSubject}`}>
+                    <div className="bg-brand-yellow text-brand-blue rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105">
+                      <Icon className="text-2xl text-brand-blue" />
+                      <span className="text-sm font-semibold text-center">
+                        {subject.name}
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+              
+              {/* View More Optional Subjects Card */}
+              <Link href="/past-papers">
+                <div className="bg-gray-100 text-brand-blue rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 border-2 border-dashed border-brand-blue-300">
+                  <PiBookBookmarkBold className="text-2xl text-brand-blue" />
+                  <span className="text-sm font-semibold text-center">
+                    View More Subjects
+                  </span>
+                </div>
+              </Link>
+            </div>
+          </div>
+
+          {/* View All Button */}
+          <div className="text-center">
+            <Link
+              href="/past-papers"
+              className="inline-block bg-black text-brand-white font-semibold px-8 py-3 rounded-md hover:bg-gray-900 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              → View All Past Papers
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

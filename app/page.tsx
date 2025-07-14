@@ -17,13 +17,13 @@ export default function Home() {
         <HeroSectionSwiper />
         <AboutSectionOne />
         <CampusLifeSection />
-        <AboutSectionTwo />
         <CSSOverviewSection />
+        <PastPapersTeaser />
         <ProgramsAndCourses />
         <TestSeriesSection />
+        <AboutSectionTwo />
         <OurResults />
         <MagazineAndBlog />
-        <PastPapersTeaser />
       </main>
 
       <Footer />

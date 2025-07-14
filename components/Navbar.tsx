@@ -1,14 +1,39 @@
 'use client';
 
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import Logo from './Logo'
 import { HiMenuAlt1, HiX } from 'react-icons/hi'
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const pathname = usePathname();
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+    const pathname = usePathname();    // Handle scroll behavior
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY;
+            
+            // Check if scrolled past initial position
+            setIsScrolled(currentScrollY > 50);
+            
+            // Show/hide navbar based on scroll direction
+            if (currentScrollY < lastScrollY || currentScrollY < 100) {
+                // Scrolling up or near top - show navbar
+                setIsVisible(true);
+            } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down and not near top - hide navbar
+                setIsVisible(false);
+            }
+            
+            setLastScrollY(currentScrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [lastScrollY]);
 
     const isActive = (href: string) => {
         if (href === '/') {
@@ -22,10 +47,17 @@ export default function Navbar() {
     };
 
     const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false);
-    };
+        setIsMobileMenuOpen(false);    };
     return (
-        <nav className="text-black bg-brand-white/30 px-5 min-[440px]:px-14 relative z-[11]">
+        <nav className={`text-black px-5 min-[440px]:px-14 z-[11] transition-all duration-300 ease-in-out ${
+            isScrolled 
+                ? `fixed top-0 left-0 right-0 ${isVisible ? 'translate-y-0' : '-translate-y-[162px]'}` 
+                : 'relative'
+        } ${
+            isScrolled 
+                ? 'bg-white backdrop-blur-md shadow-lg' 
+                : 'bg-white backdrop-blur-sm shadow-sm'
+        }`}>
             {/* Logo Div */}
             <div className="flex items-center justify-between pt-6 pb-6 min-[991px]:pb-14">
                 {/* NavLogo */}
@@ -38,12 +70,12 @@ export default function Navbar() {
                 >
                     <HiMenuAlt1 size={30} />
                 </button>
-            </div>
-
-            {/* Navigation Links */}
+            </div>            {/* Navigation Links */}
             {/* left-14 right-14 rounded */}
             {/* media query at 991px */}
-            <div className="bg-brand-blue hidden min-[991px]:flex border-b border-white absolute -bottom-5 left-14 right-14 rounded-md items-center justify-between py-2">
+            <div className={`bg-brand-blue hidden min-[991px]:flex border-b border-white absolute left-14 right-14 rounded-md items-center justify-between py-2 transition-all duration-300 ease-in-out ${
+                isVisible ? '-bottom-5' : '-bottom-5'
+            }`}>
                 <ul className="flex uppercase text-white text-sm font-medium px-2">
                     <li className={`rounded-[4px] px-5 py-2 flex items-center justify-center text-center border-r border-gray-500 ${isActive('/') ? 'bg-brand-yellow text-black' : ''}`}>
                         <Link className='' href={'/'}>Home</Link>
