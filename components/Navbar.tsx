@@ -11,14 +11,16 @@ export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const pathname = usePathname();    // Handle scroll behavior
+    const pathname = usePathname();
+
+    // Handle scroll behavior
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            
+
             // Check if scrolled past initial position
             setIsScrolled(currentScrollY > 50);
-            
+
             // Show/hide navbar based on scroll direction
             if (currentScrollY < lastScrollY || currentScrollY < 100) {
                 // Scrolling up or near top - show navbar
@@ -27,13 +29,34 @@ export default function Navbar() {
                 // Scrolling down and not near top - hide navbar
                 setIsVisible(false);
             }
-            
+
             setLastScrollY(currentScrollY);
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, [lastScrollY]);
+
+    // Close mobile menu when clicking outside or pressing escape
+    useEffect(() => {
+        const handleEscape = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                setIsMobileMenuOpen(false);
+            }
+        };
+
+        if (isMobileMenuOpen) {
+            document.addEventListener('keydown', handleEscape);
+            document.body.style.overflow = 'hidden'; // Prevent background scroll
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
 
     const isActive = (href: string) => {
         if (href === '/') {
@@ -47,17 +70,17 @@ export default function Navbar() {
     };
 
     const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false);    };
+        setIsMobileMenuOpen(false);
+    };
     return (
         <nav className={`text-black px-5 min-[440px]:px-14 z-[11] transition-all duration-300 ease-in-out ${
             isScrolled 
                 ? `fixed top-0 left-0 right-0 ${isVisible ? 'translate-y-0' : '-translate-y-[162px]'}` 
                 : 'relative'
-        } ${
-            isScrolled 
-                ? 'bg-white backdrop-blur-md shadow-lg' 
+            } ${isScrolled
+                ? 'bg-white backdrop-blur-md shadow-lg'
                 : 'bg-white backdrop-blur-sm shadow-sm'
-        }`}>
+            }`}>
             {/* Logo Div */}
             <div className="flex items-center justify-between pt-6 pb-6 min-[991px]:pb-14">
                 {/* NavLogo */}
@@ -73,9 +96,8 @@ export default function Navbar() {
             </div>            {/* Navigation Links */}
             {/* left-14 right-14 rounded */}
             {/* media query at 991px */}
-            <div className={`bg-brand-blue hidden min-[991px]:flex border-b border-white absolute left-14 right-14 rounded-md items-center justify-between py-2 transition-all duration-300 ease-in-out ${
-                isVisible ? '-bottom-5' : '-bottom-5'
-            }`}>
+            <div className={`bg-brand-blue hidden min-[991px]:flex border-b border-white absolute left-14 right-14 rounded-md items-center justify-between py-2 transition-all duration-300 ease-in-out ${isVisible ? '-bottom-5' : '-bottom-5'
+                }`}>
                 <ul className="flex uppercase text-white text-sm font-medium px-2">
                     <li className={`rounded-[4px] px-5 py-2 flex items-center justify-center text-center border-r border-gray-500 ${isActive('/') ? 'bg-brand-yellow text-black' : ''}`}>
                         <Link className='' href={'/'}>Home</Link>
@@ -102,19 +124,20 @@ export default function Navbar() {
                         <Link className='' href={'/contact'}>Contact</Link>
                     </li>
                 </ul>
-            </div>
-
-            {/* Mobile Menu Overlay */}
+            </div>            {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-50 min-[991px]:hidden"
+                    className="fixed inset-0 bg-black/50 z-[60] min-[991px]:hidden"
                     onClick={closeMobileMenu}
                 ></div>
-            )}
-
-            {/* Mobile Side Menu */}
-            <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-                }`}>
+            )}            {/* Mobile Side Menu */}
+            <div
+                className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[100000] transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                    }`}
+                style={{
+                    transform: isMobileMenuOpen ? 'translateX(0)' : 'translateX(100%)'
+                }}
+            >
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-200">
                     <Logo />
@@ -124,7 +147,7 @@ export default function Navbar() {
                     >
                         <HiX size={24} />
                     </button>
-                </div>                {/* Mobile Menu Links */}
+                </div>{/* Mobile Menu Links */}
                 <div className="py-6">
                     <ul className="space-y-2">
                         <li>

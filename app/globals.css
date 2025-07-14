@@ -4,6 +4,11 @@
 @import 'swiper/css/pagination';
 @import 'swiper/css/effect-fade';
 
+/* Prevent horizontal scroll when mobile menu is closed */
+body {
+  overflow-x: hidden;
+}
+
 @theme {
   /* Brand Red */
   --color-brand-red-50: #fdeaeb;
