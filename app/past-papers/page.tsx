@@ -1,49 +1,23 @@
 import Navbar from '@/components/Navbar';
 import Topbar from '@/components/Topbar';
 import Footer from '@/components/Sections/Footer';
-import SubjectCard from '@/components/SubjectCard';
-import { getAllSubjects, getPapersBySubject } from '@/utils/pastPapersServerUtils';
+import Link from 'next/link';
+import { getAllSubjects } from '@/utils/pastPapersServerUtils';
 import { 
   PiExamBold, 
-  PiBookOpenTextBold, 
-  PiBrainBold, 
-  PiNewspaperClippingBold, 
-  PiFlagBold, 
-  PiHandsPrayingBold, 
-  PiBookBookmarkBold,
-  PiGlobeBold,
-  PiMountainsBold,
-  PiLightbulbBold,
-  PiTreeBold,
-  PiBuildings
+  PiBuildings,
+  PiBookOpenTextBold,
+  PiGraduationCapBold
 } from 'react-icons/pi';
 
 export const metadata = {
-  title: 'CSS Past Papers | ICEP Institute',
-  description: 'Access a comprehensive collection of CSS past papers from all subjects. Download and practice with solved and unsolved papers to enhance your preparation.',
+  title: 'CSS & PMS Past Papers | ICEP Institute',
+  description: 'Access a comprehensive collection of CSS and PMS past papers. Choose between Central Superior Services (CSS) or Provincial Management Service (PMS) exam preparations.',
 };
 
 export default async function PastPapersPage() {
-  // Get all unique subjects
+  // Get all unique subjects to show counts
   const subjectsObject = await getAllSubjects();
-  const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
-  console.log(subjectsObject);
-  
-  // Map icons to subjects
-  const subjectIcons: Record<string, React.ReactNode> = {
-    'English Essay': <PiBookOpenTextBold />,
-    'English (Precis & Composition)': <PiExamBold />,
-    'General Science & Ability': <PiBrainBold />,
-    'Current Affairs': <PiNewspaperClippingBold />,
-    'Pakistan Affairs': <PiFlagBold />,
-    'Islamic Studies': <PiHandsPrayingBold />,
-    'Political Science': <PiBuildings />,
-    'Indo-Pak History': <PiMountainsBold />,
-    'International Relations': <PiGlobeBold />,
-    'Environmental Science': <PiTreeBold />,
-    'Governance & Public Policies': <PiLightbulbBold />,
-  };
-  
   return (
     <>
       <Topbar />
@@ -54,69 +28,112 @@ export default async function PastPapersPage() {
         <section className="bg-brand-blue text-white py-16 md:py-24">
           <div className="container mx-auto px-6 md:px-12">
             <h1 className="text-4xl md:text-5xl font-bold heading-font mb-4">
-              CSS Past Papers
+              CSS & PMS Past Papers
             </h1>
             <p className="text-brand-blue-100 text-lg max-w-3xl">
-              Access a comprehensive collection of CSS past papers from 2014 to 2024. 
-              Practice with real exam questions to enhance your preparation and increase your chances of success.
+              Choose your examination type to access a comprehensive collection of past papers. 
+              Practice with real exam questions to enhance your preparation.
             </p>
           </div>
         </section>
         
-        {/* Subjects grid */}
-        <section className="py-12 md:py-20 bg-brand-white">
+        {/* Exam Options */}
+        <section className="py-20 bg-brand-white">
           <div className="container mx-auto px-6 md:px-12">
-            <h2 className="text-3xl font-bold heading-font text-brand-blue mb-8">
-              Select a Subject
+            <h2 className="text-3xl font-bold heading-font text-brand-blue mb-12 text-center">
+              Select Your Examination
             </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {subjects.map(async (subject, index) => {
-                const papers = await getPapersBySubject(subject.name);
-                const paperCount = papers.length;
-                return (
-                  <SubjectCard 
-                    key={subject.name}
-                    subject={subject.name}
-                    icon={subjectIcons[subject.name] || <PiBookBookmarkBold />}
-                    count={paperCount}
-                    index={index}
-                  />
-                );
-              })}
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              {/* CSS Card */}
+              <Link href="/css-past-papers">
+                <div className="bg-gradient-to-br from-brand-blue to-brand-blue-600 text-white rounded-xl shadow-lg p-8 cursor-pointer hover:from-brand-blue-600 hover:to-brand-blue-700 transition-all duration-300 transform hover:scale-105">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-brand-yellow rounded-lg flex items-center justify-center">
+                      <PiExamBold className="text-3xl text-brand-blue" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold">CSS Papers</h3>
+                      <p className="text-brand-blue-100">Central Superior Services</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between items-center bg-white/10 rounded p-3">
+                      <span>Compulsory Subjects</span>
+                      <span className="font-semibold">{subjectsObject.css.comp.length}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-white/10 rounded p-3">
+                      <span>Optional Subjects</span>
+                      <span className="font-semibold">{subjectsObject.css.optional.length}</span>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <span className="inline-block bg-brand-yellow text-brand-blue px-4 py-2 rounded-lg font-semibold">
+                      Browse CSS Papers →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+
+              {/* PMS Card */}
+              <Link href="/pms-past-papers">
+                <div className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl shadow-lg p-8 cursor-pointer hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105">
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-brand-yellow rounded-lg flex items-center justify-center">
+                      <PiBuildings className="text-3xl text-green-700" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold">PMS Papers</h3>
+                      <p className="text-green-100">Provincial Management Service</p>
+                    </div>
+                  </div>
+                  <div className="space-y-3 mb-6">
+                    <div className="flex justify-between items-center bg-white/10 rounded p-3">
+                      <span>Compulsory Subjects</span>
+                      <span className="font-semibold">{subjectsObject.pms.comp.length}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-white/10 rounded p-3">
+                      <span>Optional Subjects</span>
+                      <span className="font-semibold">{subjectsObject.pms.optional.length}</span>
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <span className="inline-block bg-brand-yellow text-green-700 px-4 py-2 rounded-lg font-semibold">
+                      Browse PMS Papers →
+                    </span>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
-        
-        {/* Info section */}
-        <section className="py-16 bg-brand-blue-50 border-t border-b border-brand-blue-100">
+
+        {/* Features Section */}
+        <section className="py-16 bg-gray-50">
           <div className="container mx-auto px-6 md:px-12">
-            <div className="bg-white p-6 md:p-8 rounded-lg shadow-md border border-brand-blue-100">
-              <h2 className="text-2xl font-bold heading-font text-brand-blue mb-4">
-                How to Use CSS Past Papers
-              </h2>
-              
-              <div className="space-y-4 text-brand-blue-700">
-                <p>
-                  <strong>1. Understand the Pattern:</strong> Review the exam structure, marking scheme, and question formats.
-                </p>
-                <p>
-                  <strong>2. Practice Regularly:</strong> Solve papers from multiple years to familiarize yourself with different question styles.
-                </p>
-                <p>
-                  <strong>3. Time Management:</strong> Practice under timed conditions to improve your speed and efficiency.
-                </p>
-                <p>
-                  <strong>4. Self-Assessment:</strong> Compare your answers with model solutions to identify areas for improvement.
-                </p>
-                <p>
-                  <strong>5. Pattern Recognition:</strong> Identify recurring themes and topics that frequently appear in exams.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
+                  <PiBookOpenTextBold className="text-2xl text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">Comprehensive Collection</h3>
+                <p className="text-gray-600">Access past papers from multiple years with detailed categorization by subjects and exam types.</p>
               </div>
               
-              <div className="mt-6 p-4 bg-brand-yellow-50 border border-brand-yellow-200 rounded-md">
-                <p className="text-brand-blue-800 font-medium">
-                  Need help with your CSS preparation? Join ICEP&apos;s comprehensive CSS preparation courses for expert guidance and mentorship.
-                </p>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <PiGraduationCapBold className="text-2xl text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">Exam Pattern Analysis</h3>
+                <p className="text-gray-600">Understand question patterns and marking schemes through systematic practice with real papers.</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-4">
+                  <PiExamBold className="text-2xl text-brand-blue" />
+                </div>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">Regular Updates</h3>
+                <p className="text-gray-600">Stay updated with the latest papers and examination trends for better preparation.</p>
               </div>
             </div>
           </div>

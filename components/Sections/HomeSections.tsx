@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
-import { PiExamBold, PiBookOpenTextBold, PiBrainBold, PiNewspaperClippingBold, PiFlagBold, PiHandsPrayingBold, PiBookBookmarkBold } from 'react-icons/pi';
+import { PiExamBold, PiBookOpenTextBold, PiBrainBold, PiNewspaperClippingBold, PiFlagBold, PiHandsPrayingBold, PiBuildings } from 'react-icons/pi';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 import CourseCard from '@/components/CourseCard';
 
@@ -74,15 +74,6 @@ const compulsorySubjects = [
   { name: 'Current Affairs', icon: PiNewspaperClippingBold },
   { name: 'Pakistan Affairs', icon: PiFlagBold },
   { name: 'Islamic Studies / Comparative Religion', icon: PiHandsPrayingBold },
-];
-
-const optionalSubjects = [
-  { name: 'International Relations', icon: PiBrainBold },
-  { name: 'Political Science', icon: PiExamBold },
-  { name: 'Environmental Science', icon: PiBookOpenTextBold },
-  { name: 'Governance & Public Policies', icon: PiNewspaperClippingBold },
-  { name: 'Indo Pak History', icon: PiFlagBold },
-  { name: 'Punjabi', icon: PiHandsPrayingBold },
 ];
 
 export function CSSOverviewSection() {
@@ -343,71 +334,81 @@ export function PastPapersTeaser() {
           className="p-8 rounded-xl bg-brand-white shadow-lg"
         >
           <h2 className="text-3xl md:text-4xl font-bold heading-font mb-3">
-            CSS Past Papers
+            CSS & PMS Past Papers
           </h2>
           <p className="text-base mb-10">
-            Access solved and unsolved past papers categorized by subject and year.
-          </p>
+            Access solved and unsolved past papers for both CSS and PMS exams, categorized by subject and year.
+          </p>          {/* CSS and PMS Exam Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            {/* CSS Card */}
+            <Link href="/css-past-papers">
+              <div className="bg-gradient-to-br from-brand-blue to-brand-blue-600 text-white rounded-xl shadow-lg p-6 cursor-pointer hover:from-brand-blue-600 hover:to-brand-blue-700 transition-all duration-300 transform hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-brand-yellow rounded-lg flex items-center justify-center">
+                    <PiExamBold className="text-2xl text-brand-blue" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">CSS Papers</h3>
+                    <p className="text-brand-blue-100">Central Superior Services</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="bg-white/10 rounded p-2">
+                    <span className="font-semibold">6</span> Compulsory
+                  </div>
+                  <div className="bg-white/10 rounded p-2">
+                    <span className="font-semibold">6+</span> Optional
+                  </div>
+                </div>
+              </div>
+            </Link>
 
-          {/* Compulsory Subjects Section */}
-          <div className="mb-10">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-8 bg-brand-blue rounded-full"></div>
-              <h3 className="text-2xl font-bold text-brand-blue">Compulsory Subjects</h3>
-              <div className="flex-1 h-px bg-brand-blue-200"></div>
-            </div>
-            
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4 mb-6">
-              {compulsorySubjects.map((subject, index) => {
-                const Icon = subject.icon;
-                const urlSubject = formatSubjectForUrl(subject.name);
-                return (
-                  <Link key={index} href={`/past-papers/${urlSubject}`}>
-                    <div className="bg-brand-blue text-brand-white rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-brand-blue-600 transition-all duration-300 transform hover:scale-105">
-                      <Icon className="text-2xl text-brand-yellow" />
-                      <span className="text-sm font-semibold text-center">
-                        {subject.name}
-                      </span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+            {/* PMS Card */}
+            <Link href="/pms-past-papers">
+              <div className="bg-gradient-to-br from-green-600 to-green-700 text-white rounded-xl shadow-lg p-6 cursor-pointer hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105">
+                <div className="flex items-center gap-4 mb-4">                  <div className="w-12 h-12 bg-brand-yellow rounded-lg flex items-center justify-center">
+                    <PiBuildings className="text-2xl text-green-700" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold">PMS Papers</h3>
+                    <p className="text-green-100">Provincial Management Service</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="bg-white/10 rounded p-2">
+                    <span className="font-semibold">4</span> Compulsory
+                  </div>
+                  <div className="bg-white/10 rounded p-2">
+                    <span className="font-semibold">Various</span> Optional
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
 
-          {/* Optional Subjects Section */}
+          {/* Quick Access to Popular Subjects */}
           <div className="mb-8">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-1 h-8 bg-brand-yellow rounded-full"></div>
-              <h3 className="text-2xl font-bold text-brand-blue">Optional Subjects</h3>
+              <div className="w-1 h-8 bg-brand-blue rounded-full"></div>
+              <h3 className="text-2xl font-bold text-brand-blue">Popular Subjects</h3>
               <div className="flex-1 h-px bg-brand-blue-200"></div>
             </div>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
-              {optionalSubjects.map((subject, index) => {
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+              {compulsorySubjects.slice(0, 6).map((subject, index) => {
                 const Icon = subject.icon;
                 const urlSubject = formatSubjectForUrl(subject.name);
                 return (
                   <Link key={index} href={`/past-papers/${urlSubject}`}>
-                    <div className="bg-brand-yellow text-brand-blue rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105">
-                      <Icon className="text-2xl text-brand-blue" />
-                      <span className="text-sm font-semibold text-center">
-                        {subject.name}
+                    <div className="bg-gray-50 text-brand-blue rounded-lg shadow p-3 cursor-pointer flex flex-col items-center gap-2 hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 border border-gray-200">
+                      <Icon className="text-xl text-brand-blue" />
+                      <span className="text-xs font-semibold text-center">
+                        {subject.name.length > 15 ? subject.name.slice(0, 12) + '...' : subject.name}
                       </span>
                     </div>
                   </Link>
                 );
               })}
-              
-              {/* View More Optional Subjects Card */}
-              <Link href="/past-papers">
-                <div className="bg-gray-100 text-brand-blue rounded-lg shadow p-4 cursor-pointer flex flex-col items-center gap-2 hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 border-2 border-dashed border-brand-blue-300">
-                  <PiBookBookmarkBold className="text-2xl text-brand-blue" />
-                  <span className="text-sm font-semibold text-center">
-                    View More Subjects
-                  </span>
-                </div>
-              </Link>
             </div>
           </div>
 
