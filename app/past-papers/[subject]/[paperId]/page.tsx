@@ -26,7 +26,7 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   const allPapers = await getAllPastPapers();
 
   return allPapers.map((paper) => ({
-    subject: formatSubjectForUrl(paper.subject),
+    subject: formatSubjectForUrl(paper.subject.name),
     paperId: paper.id,
   }));
 }
@@ -47,11 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function PaperPage({ params }: Props) {
-  const paper = await getPaperById(params.paperId);
+  const paperId = await Promise.resolve(params.paperId);
+  const paper = await getPaperById(paperId);
 
   if (!paper) notFound();
 
-  const urlSubject = formatSubjectForUrl(paper.subject);
+  const urlSubject = formatSubjectForUrl(paper.subject.name);
+  console.log(paper.fileUrl);
 
   return (
     <>
@@ -67,13 +69,13 @@ export default async function PaperPage({ params }: Props) {
               <ChevronRightIcon className="w-4 h-4" />
               <Link href="/past-papers" className="hover:text-brand-blue-100">Past Papers</Link>
               <ChevronRightIcon className="w-4 h-4" />
-              <Link href={`/past-papers/${urlSubject}`} className="hover:text-brand-blue-100">{paper.subject}</Link>
+              <Link href={`/past-papers/${urlSubject}`} className="hover:text-brand-blue-100">{paper.subject.name}</Link>
               <ChevronRightIcon className="w-4 h-4" />
               <span className="truncate max-w-[150px] sm:max-w-none">{paper.yearRange}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl font-bold heading-font mb-3">
-              {paper.subject} Past Paper
+              {paper.subject.name} Past Paper
             </h1>
             <p className="text-brand-blue-100">
               Examination Years: <span className="font-semibold">{paper.yearRange}</span>
@@ -90,7 +92,7 @@ export default async function PaperPage({ params }: Props) {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <p className="text-brand-blue-400 text-sm">Subject</p>
-                  <p className="text-brand-blue-800 font-medium">{paper.subject}</p>
+                  <p className="text-brand-blue-800 font-medium">{paper.subject.name}</p>
                 </div>
                 <div>
                   <p className="text-brand-blue-400 text-sm">Years Covered</p>

@@ -12,7 +12,7 @@ interface PaperCardProps {
 }
 
 const PaperCard = ({ paper, index }: PaperCardProps) => {
-  const urlSubject = formatSubjectForUrl(paper.subject);
+  const urlSubject = formatSubjectForUrl(paper.subject.name);
   
   return (
     <motion.div
@@ -29,7 +29,7 @@ const PaperCard = ({ paper, index }: PaperCardProps) => {
           
           <div className="flex-1">
             <h3 className="font-medium text-brand-blue-800">
-              {paper.subject}
+              {paper.subject.name}
             </h3>
             <p className="text-sm text-brand-blue-400">
               Years: {paper.yearRange}

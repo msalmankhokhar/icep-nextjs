@@ -26,18 +26,22 @@ type Props = {
 export const dynamicParams = true;
 
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const subjects = await getAllSubjects();
+  const subjectsObject = await getAllSubjects();
+  // const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
+  // const compulsoryCSSSubjects = subjectsObject.css.comp;
+  // const optionalCSSSubjects = subjectsObject.css.optional;
   
-  return subjects.map(subject => ({
-    subject: formatSubjectForUrl(subject)
+  return [...subjectsObject.css.comp, ...subjectsObject.css.optional].map(subject => ({
+    subject: formatSubjectForUrl(subject.name)
   }));
 }
 
 export async function generateMetadata({ params }: Props) {
   // Make sure to use promise here to avoid Next.js warnings
-  const subjectParam = await Promise.resolve(params.subject);
-  const subjects = await getAllSubjects();
-  const subject = getSubjectFromUrl(subjectParam, subjects);
+  const subjectParam = (await Promise.resolve(params)).subject;
+  const subjectsObject = await getAllSubjects();
+  const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
+  const subject = getSubjectFromUrl(subjectParam, subjects.map(subject => subject.name));
   
   if (!subject) {
     return {
@@ -56,8 +60,9 @@ export default async function SubjectPage({ params }: Props) {
   const subjectParam = await Promise.resolve(params.subject);
   
   // Get the actual subject name from the URL parameter
-  const subjects = await getAllSubjects();
-  const subject = getSubjectFromUrl(subjectParam, subjects);
+  const subjectsObject = await getAllSubjects();
+  const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
+  const subject = getSubjectFromUrl(subjectParam, subjects.map(subject => subject.name));
   
   // If subject doesn't exist, show 404
   if (!subject) {

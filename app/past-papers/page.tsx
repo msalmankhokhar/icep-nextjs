@@ -25,11 +25,12 @@ export const metadata = {
 
 export default async function PastPapersPage() {
   // Get all unique subjects
-  const subjects = await getAllSubjects();
+  const subjectsObject = await getAllSubjects();
+  const subjects = [...subjectsObject.css.comp, ...subjectsObject.css.optional];
   
   // Map icons to subjects
   const subjectIcons: Record<string, React.ReactNode> = {
-    'Essay': <PiBookOpenTextBold />,
+    'English Essay': <PiBookOpenTextBold />,
     'English (Precis & Composition)': <PiExamBold />,
     'General Science & Ability': <PiBrainBold />,
     'Current Affairs': <PiNewspaperClippingBold />,
@@ -69,13 +70,13 @@ export default async function PastPapersPage() {
             </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {subjects.map(async (subject, index) => {
-                const papers = await getPapersBySubject(subject);
+                const papers = await getPapersBySubject(subject.name);
                 const paperCount = papers.length;
                 return (
                   <SubjectCard 
-                    key={subject}
-                    subject={subject}
-                    icon={subjectIcons[subject] || <PiBookBookmarkBold />}
+                    key={subject.name}
+                    subject={subject.name}
+                    icon={subjectIcons[subject.name] || <PiBookBookmarkBold />}
                     count={paperCount}
                     index={index}
                   />

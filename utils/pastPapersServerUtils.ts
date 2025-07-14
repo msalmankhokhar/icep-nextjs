@@ -72,7 +72,7 @@ export function extractSubjectName(filename: string): string {
   return subjectName;
 }
 
-export function generatePastPapersList({ fileNames, subject }: { fileNames: string[], subject: PastPaperSubject }): PastPaper[] {
+export function generatePastPapersList({ fileNames, subject, parentDir, parentPath }: { fileNames: string[], subject: PastPaperSubject, parentDir: string, parentPath: string }): PastPaper[] {
 
   const pastPapersList = fileNames.map(fileName => {
     const id = fileName.replace(/\.pdf$/, '');
@@ -84,8 +84,8 @@ export function generatePastPapersList({ fileNames, subject }: { fileNames: stri
       subject: subject,
       year,
       yearRange,
-      filePath: path.join(pastPapersDirectory, fileName),
-      fileUrl: `/docs/past_papers/css_past_papers/${fileName}`,
+      filePath: path.join(parentDir, fileName),
+      fileUrl: `/docs/past_papers/${parentPath}${fileName}`,
     };
   });
 
@@ -98,46 +98,54 @@ export function getAllPastPapers(): PastPaper[] {
   const pastPapers = []
 
   for (const subject of cssCompSubjectNames) {
-    const fileNames = fs.readdirSync(path.join(cssCompPastPapersDirectory, subject));
+    const parentDir = path.join(cssCompPastPapersDirectory, subject);
+    const parentPath = `css_past_papers/comp/${subject}/`;
+    const fileNames = fs.readdirSync(parentDir);
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'compulsory',
       Exam: 'CSS'
     };
-    const cssCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    const cssCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
     pastPapers.push(...cssCompPastPapers);
   }
 
   for (const subject of cssOptionalSubjectNames) {
+    const parentDir = path.join(cssOptionalPastPapersDirectory, subject);
+    const parentPath = `css_past_papers/optional/${subject}/`;
     const fileNames = fs.readdirSync(path.join(cssOptionalPastPapersDirectory, subject));
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'optional',
       Exam: 'CSS'
     };
-    const cssOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    const cssOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
     pastPapers.push(...cssOptionalPastPapers);
   }
 
   for (const subject of pmsCompSubjectNames) {
+    const parentDir = path.join(pmsCompPastPapersDirectory, subject);
+    const parentPath = `pms_past_papers/comp/${subject}/`;
     const fileNames = fs.readdirSync(path.join(pmsCompPastPapersDirectory, subject));
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'compulsory',
       Exam: 'PMS'
     };
-    const pmsCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    const pmsCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
     pastPapers.push(...pmsCompPastPapers);
   }
 
   for (const subject of pmsOptionalSubjectNames) {
+    const parentDir = path.join(pmsOptionalPastPapersDirectory, subject);
+    const parentPath = `pms_past_papers/optional/${subject}/`;
     const fileNames = fs.readdirSync(path.join(pmsOptionalPastPapersDirectory, subject));
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'optional',
       Exam: 'PMS'
     };
-    const pmsOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    const pmsOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
     pastPapers.push(...pmsOptionalPastPapers);
   }
 
@@ -183,24 +191,24 @@ export async function getAllSubjects(): Promise<
   return {
     css: {
       comp: cssCompSubjectNames.map(name => ({
-        name: subjectNameMap[name] || name,
+        name: name,
         type: 'compulsory',
         Exam: 'CSS'
       })),
       optional: cssOptionalSubjectNames.map(name => ({
-        name: subjectNameMap[name] || name,
+        name: name,
         type: 'optional',
         Exam: 'CSS'
       }))
     },
     pms: {
       comp: pmsCompSubjectNames.map(name => ({
-        name: subjectNameMap[name] || name,
+        name: name,
         type: 'compulsory',
         Exam: 'PMS'
       })),
       optional: pmsOptionalSubjectNames.map(name => ({
-        name: subjectNameMap[name] || name,
+        name: name,
         type: 'optional',
         Exam: 'PMS'
       }))
