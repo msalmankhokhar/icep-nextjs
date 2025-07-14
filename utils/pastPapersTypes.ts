@@ -1,10 +1,16 @@
-// utils/pastPapersTypes.ts
+export type ExamName = 'CSS' | 'PMS';
+export type SubjectType = 'compulsory' | 'optional';
 
-// Define the structure of a past paper
+export interface PastPaperSubject {
+  name: string; 
+  Exam: ExamName
+  type: SubjectType;
+}
+
 export interface PastPaper {
   id: string;
   title: string;
-  subject: string;
+  subject: PastPaperSubject;
   year: string;
   yearRange: string;
   filePath: string;

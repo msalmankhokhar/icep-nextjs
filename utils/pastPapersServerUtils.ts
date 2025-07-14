@@ -2,7 +2,7 @@
 import 'server-only';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import { PastPaper } from './pastPapersTypes';
+import { PastPaper, PastPaperSubject } from './pastPapersTypes';
 
 // Map file names to cleaner subject names
 const subjectNameMap: Record<string, string> = {
@@ -20,6 +20,17 @@ const subjectNameMap: Record<string, string> = {
   'Punjabi': 'Punjabi'
 };
 
+const pastPapersDirectory = path.join(process.cwd(), 'public/docs/past_papers');
+const cssCompPastPapersDirectory = path.join(pastPapersDirectory, 'css_past_papers/comp');
+const cssOptionalPastPapersDirectory = path.join(pastPapersDirectory, 'css_past_papers/optional');
+const pmsCompPastPapersDirectory = path.join(pastPapersDirectory, 'pms_past_papers/comp');
+const pmsOptionalPastPapersDirectory = path.join(pastPapersDirectory, 'pms_past_papers/optional');
+
+const cssCompSubjectNames = fs.readdirSync(cssCompPastPapersDirectory);
+const cssOptionalSubjectNames = fs.readdirSync(cssOptionalPastPapersDirectory);
+const pmsCompSubjectNames = fs.readdirSync(pmsCompPastPapersDirectory);
+const pmsOptionalSubjectNames = fs.readdirSync(pmsOptionalPastPapersDirectory);
+
 // Extract year information from filename
 function extractYearInfo(filename: string): { year: string; yearRange: string } {
   // Look for year patterns like "2016-2024" in the filename
@@ -30,7 +41,7 @@ function extractYearInfo(filename: string): { year: string; yearRange: string } 
       yearRange: `${yearRangeMatch[1]}-${yearRangeMatch[2]}`
     };
   }
-  
+
   // If no year range, look for single year
   const yearMatch = filename.match(/(\d{4})/);
   if (yearMatch) {
@@ -39,7 +50,7 @@ function extractYearInfo(filename: string): { year: string; yearRange: string } 
       yearRange: yearMatch[1]
     };
   }
-  
+
   return {
     year: 'Unknown',
     yearRange: 'Unknown'
@@ -47,48 +58,96 @@ function extractYearInfo(filename: string): { year: string; yearRange: string } 
 }
 
 // Extract subject name from filename
-function extractSubjectName(filename: string): string {
+export function extractSubjectName(filename: string): string {
   // Remove year part and file extension
   const subjectName = filename.replace(/\d{4}-\d{4}.*$|\d{4}.*$/, '').trim();
-  
+
   // Look for exact match in the map
   for (const key in subjectNameMap) {
     if (subjectName.includes(key)) {
       return subjectNameMap[key];
     }
   }
-  
+
   return subjectName;
 }
 
-// Load all past papers
-export async function getAllPastPapers(): Promise<PastPaper[]> {
-  const pastPapersDirectory = path.join(process.cwd(), 'public/docs/past_papers/css_past_papers');
-  const fileNames = fs.readdirSync(pastPapersDirectory);
-  
-  const pastPapers = fileNames.map(fileName => {
+export function generatePastPapersList({ fileNames, subject }: { fileNames: string[], subject: PastPaperSubject }): PastPaper[] {
+
+  const pastPapersList = fileNames.map(fileName => {
     const id = fileName.replace(/\.pdf$/, '');
-    const subjectName = extractSubjectName(id);
     const { year, yearRange } = extractYearInfo(id);
-    
+
     return {
       id,
-      title: `${subjectName} (${yearRange})`,
-      subject: subjectName,
+      title: `${subject.name} (${yearRange})`,
+      subject: subject,
       year,
       yearRange,
       filePath: path.join(pastPapersDirectory, fileName),
-      fileUrl: `/docs/past_papers/css_past_papers/${fileName}`
+      fileUrl: `/docs/past_papers/css_past_papers/${fileName}`,
     };
   });
-  
-  return pastPapers;
+
+  return pastPapersList;
+}
+
+// Load all past papers
+export function getAllPastPapers(): PastPaper[] {
+
+  const pastPapers = []
+
+  for (const subject of cssCompSubjectNames) {
+    const fileNames = fs.readdirSync(path.join(cssCompPastPapersDirectory, subject));
+    const subjectData: PastPaperSubject = {
+      name: subject,
+      type: 'compulsory',
+      Exam: 'CSS'
+    };
+    const cssCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    pastPapers.push(...cssCompPastPapers);
+  }
+
+  for (const subject of cssOptionalSubjectNames) {
+    const fileNames = fs.readdirSync(path.join(cssOptionalPastPapersDirectory, subject));
+    const subjectData: PastPaperSubject = {
+      name: subject,
+      type: 'optional',
+      Exam: 'CSS'
+    };
+    const cssOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    pastPapers.push(...cssOptionalPastPapers);
+  }
+
+  for (const subject of pmsCompSubjectNames) {
+    const fileNames = fs.readdirSync(path.join(pmsCompPastPapersDirectory, subject));
+    const subjectData: PastPaperSubject = {
+      name: subject,
+      type: 'compulsory',
+      Exam: 'PMS'
+    };
+    const pmsCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    pastPapers.push(...pmsCompPastPapers);
+  }
+
+  for (const subject of pmsOptionalSubjectNames) {
+    const fileNames = fs.readdirSync(path.join(pmsOptionalPastPapersDirectory, subject));
+    const subjectData: PastPaperSubject = {
+      name: subject,
+      type: 'optional',
+      Exam: 'PMS'
+    };
+    const pmsOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData });
+    pastPapers.push(...pmsOptionalPastPapers);
+  }
+
+  return pastPapers
 }
 
 // Get papers for a specific subject
 export async function getPapersBySubject(subject: string): Promise<PastPaper[]> {
-  const allPapers = await getAllPastPapers();
-  
+  const allPapers = getAllPastPapers();
+
   // Find the standardized subject name if it exists
   let standardizedSubject = subject;
   for (const [value] of Object.entries(subjectNameMap)) {
@@ -97,21 +156,54 @@ export async function getPapersBySubject(subject: string): Promise<PastPaper[]> 
       break;
     }
   }
-  
-  return allPapers.filter(paper => 
-    paper.subject.toLowerCase() === standardizedSubject.toLowerCase()
+
+  return allPapers.filter(paper =>
+    paper.subject.name.toLowerCase() === standardizedSubject.toLowerCase()
   );
 }
 
 // Get a specific paper by ID
 export async function getPaperById(id: string): Promise<PastPaper | null> {
-  const allPapers = await getAllPastPapers();
+  const allPapers = getAllPastPapers();
   return allPapers.find(paper => paper.id === id) || null;
 }
 
 // Get all unique subjects
-export async function getAllSubjects(): Promise<string[]> {
-  const allPapers = await getAllPastPapers();
-  const subjectsSet = new Set(allPapers.map(paper => paper.subject));
-  return Array.from(subjectsSet);
+export async function getAllSubjects(): Promise<
+  {
+    css: {
+      comp: PastPaperSubject[];
+      optional: PastPaperSubject[];
+    };
+    pms: {
+      comp: PastPaperSubject[];
+      optional: PastPaperSubject[];
+    };
+  }> {
+  return {
+    css: {
+      comp: cssCompSubjectNames.map(name => ({
+        name: subjectNameMap[name] || name,
+        type: 'compulsory',
+        Exam: 'CSS'
+      })),
+      optional: cssOptionalSubjectNames.map(name => ({
+        name: subjectNameMap[name] || name,
+        type: 'optional',
+        Exam: 'CSS'
+      }))
+    },
+    pms: {
+      comp: pmsCompSubjectNames.map(name => ({
+        name: subjectNameMap[name] || name,
+        type: 'compulsory',
+        Exam: 'PMS'
+      })),
+      optional: pmsOptionalSubjectNames.map(name => ({
+        name: subjectNameMap[name] || name,
+        type: 'optional',
+        Exam: 'PMS'
+      }))
+    }
+  }
 }

@@ -68,7 +68,7 @@ function CountingNumber({ target, duration = 2000, suffix = '' }: { target: numb
 }
 
 const compulsorySubjects = [
-  { name: 'Essay', icon: PiBookOpenTextBold },
+  { name: 'English Essay', icon: PiBookOpenTextBold },
   { name: 'English (Precis & Composition)', icon: PiExamBold },
   { name: 'General Science & Ability', icon: PiBrainBold },
   { name: 'Current Affairs', icon: PiNewspaperClippingBold },
