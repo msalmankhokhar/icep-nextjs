@@ -26,10 +26,23 @@ const cssOptionalPastPapersDirectory = path.join(pastPapersDirectory, 'css_past_
 const pmsCompPastPapersDirectory = path.join(pastPapersDirectory, 'pms_past_papers/comp');
 const pmsOptionalPastPapersDirectory = path.join(pastPapersDirectory, 'pms_past_papers/optional');
 
-const cssCompSubjectNames = fs.readdirSync(cssCompPastPapersDirectory);
-const cssOptionalSubjectNames = fs.readdirSync(cssOptionalPastPapersDirectory);
-const pmsCompSubjectNames = fs.readdirSync(pmsCompPastPapersDirectory);
-const pmsOptionalSubjectNames = fs.readdirSync(pmsOptionalPastPapersDirectory);
+// Helper function to safely read directory
+function safeReadDir(dirPath: string): string[] {
+  try {
+    if (fs.existsSync(dirPath)) {
+      return fs.readdirSync(dirPath);
+    }
+    return [];
+  } catch (error) {
+    console.warn(`Could not read directory: ${dirPath}`, error);
+    return [];
+  }
+}
+
+const cssCompSubjectNames = safeReadDir(cssCompPastPapersDirectory);
+const cssOptionalSubjectNames = safeReadDir(cssOptionalPastPapersDirectory);
+const pmsCompSubjectNames = safeReadDir(pmsCompPastPapersDirectory);
+const pmsOptionalSubjectNames = safeReadDir(pmsOptionalPastPapersDirectory);
 
 // Extract year information from filename
 function extractYearInfo(filename: string): { year: string; yearRange: string } {
@@ -96,11 +109,10 @@ export function generatePastPapersList({ fileNames, subject, parentDir, parentPa
 export function getAllPastPapers(): PastPaper[] {
 
   const pastPapers = []
-
   for (const subject of cssCompSubjectNames) {
     const parentDir = path.join(cssCompPastPapersDirectory, subject);
     const parentPath = `css_past_papers/comp/${subject}/`;
-    const fileNames = fs.readdirSync(parentDir);
+    const fileNames = safeReadDir(parentDir);
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'compulsory',
@@ -113,7 +125,7 @@ export function getAllPastPapers(): PastPaper[] {
   for (const subject of cssOptionalSubjectNames) {
     const parentDir = path.join(cssOptionalPastPapersDirectory, subject);
     const parentPath = `css_past_papers/optional/${subject}/`;
-    const fileNames = fs.readdirSync(path.join(cssOptionalPastPapersDirectory, subject));
+    const fileNames = safeReadDir(parentDir);
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'optional',
@@ -126,7 +138,7 @@ export function getAllPastPapers(): PastPaper[] {
   for (const subject of pmsCompSubjectNames) {
     const parentDir = path.join(pmsCompPastPapersDirectory, subject);
     const parentPath = `pms_past_papers/comp/${subject}/`;
-    const fileNames = fs.readdirSync(path.join(pmsCompPastPapersDirectory, subject));
+    const fileNames = safeReadDir(parentDir);
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'compulsory',
@@ -139,7 +151,7 @@ export function getAllPastPapers(): PastPaper[] {
   for (const subject of pmsOptionalSubjectNames) {
     const parentDir = path.join(pmsOptionalPastPapersDirectory, subject);
     const parentPath = `pms_past_papers/optional/${subject}/`;
-    const fileNames = fs.readdirSync(path.join(pmsOptionalPastPapersDirectory, subject));
+    const fileNames = safeReadDir(parentDir);
     const subjectData: PastPaperSubject = {
       name: subject,
       type: 'optional',
