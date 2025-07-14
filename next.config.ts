@@ -11,9 +11,19 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     // Add any experimental features you want to use
-  },
-  // Add support for the PDF worker files
+  },  // Add support for the PDF worker files
   webpack: (config) => {
+    // Handle canvas module for PDF.js
+    config.resolve.alias.canvas = false;
+    config.resolve.alias.encoding = false;
+    
+    // Handle PDF worker files
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+      encoding: false,
+    };
+    
     return config;
   }
 };

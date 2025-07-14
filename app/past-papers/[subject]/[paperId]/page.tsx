@@ -1,6 +1,5 @@
 // app/past-papers/[subject]/[paperId]/page.tsx
 import { notFound } from 'next/navigation';
-import type { Metadata } from 'next';
 import Navbar from '@/components/Navbar';
 import Topbar from '@/components/Topbar';
 import Footer from '@/components/Sections/Footer';
@@ -8,7 +7,7 @@ import Link from 'next/link';
 import { ChevronRightIcon } from '@heroicons/react/24/solid';
 import { getAllPastPapers, getPaperById } from '@/utils/pastPapersServerUtils';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
-import PDFViewerSimple from '@/components/PDFViewerSimple';
+import PDFViewerWrapper from '@/components/PDFViewerWrapper';
 
 // Define the structure of page params from dynamic route segments
 type PageParams = {
@@ -23,7 +22,7 @@ type Props = {
 }
 
 export async function generateStaticParams(): Promise<PageParams[]> {
-  const allPapers = await getAllPastPapers();
+  const allPapers = getAllPastPapers();
 
   return allPapers.map((paper) => ({
     subject: formatSubjectForUrl(paper.subject.name),
@@ -31,20 +30,20 @@ export async function generateStaticParams(): Promise<PageParams[]> {
   }));
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const paper = await getPaperById(params.paperId);
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const paper = await getPaperById(params.paperId);
 
-  if (!paper) {
-    return {
-      title: 'Paper Not Found | ICEP Institute',
-    };
-  }
+//   if (!paper) {
+//     return {
+//       title: 'Paper Not Found | ICEP Institute',
+//     };
+//   }
 
-  return {
-    title: `${paper.subject} (${paper.yearRange}) | ICEP Institute`,
-    description: `View and download ${paper.subject} past paper from ${paper.yearRange}. Practice with real CSS exam questions to enhance your preparation.`,
-  };
-}
+//   return {
+//     title: `${paper.subject} (${paper.yearRange}) | ICEP Institute`,
+//     description: `View and download ${paper.subject} past paper from ${paper.yearRange}. Practice with real CSS exam questions to enhance your preparation.`,
+//   };
+// }
 
 export default async function PaperPage({ params }: Props) {
   const paperId = await Promise.resolve(params.paperId);
@@ -104,10 +103,9 @@ export default async function PaperPage({ params }: Props) {
                 <p className="text-brand-blue-700">
                   <strong>Tip:</strong> Practice with a timer to simulate real exam conditions.
                 </p>
-              </div>
-            </div>
+              </div>            </div>
 
-            <PDFViewerSimple pdfUrl={paper.fileUrl} />
+            <PDFViewerWrapper fileUrl={paper.fileUrl} />
           </div>
         </section>
 

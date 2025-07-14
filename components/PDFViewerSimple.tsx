@@ -72,8 +72,7 @@ const PDFViewerSimple = ({ pdfUrl }: { pdfUrl: string }) => {
           />
           <span className="text-xs font-semibold text-gray-700">ICEP Institute</span>
         </div>
-      </div> */}
-    </div>
+      </div> */}    </div>
   );
 };
 
