@@ -11,11 +11,17 @@ export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
-    const pathname = usePathname();
-
-    // Handle scroll behavior
+    const [isDesktopScreen, setIsDesktopScreen] = useState(false);
+    const pathname = usePathname();    // Handle scroll behavior - ONLY for desktop
     useEffect(() => {
+
+        // Checking screen
+        if (window.innerWidth > 991) setIsDesktopScreen(true);
+
         const handleScroll = () => {
+            // Only apply scroll behavior on desktop (991px and above)
+            if (window.innerWidth < 991) return;
+
             const currentScrollY = window.scrollY;
 
             // Check if scrolled past initial position
@@ -33,9 +39,22 @@ export default function Navbar() {
             setLastScrollY(currentScrollY);
         };
 
+        const handleResize = () => {
+            // Reset scroll behavior when resizing to/from mobile
+            if (!isDesktopScreen) {
+                setIsScrolled(false);
+                setIsVisible(true);
+            }
+        };
+
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [lastScrollY]);
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [lastScrollY, isDesktopScreen]);
 
     // Close mobile menu when clicking outside or pressing escape
     useEffect(() => {
@@ -71,15 +90,10 @@ export default function Navbar() {
 
     const closeMobileMenu = () => {
         setIsMobileMenuOpen(false);
-    };
-    return (
-        <nav className={`text-black bg-brand-white px-5 min-[440px]:px-14 relative z-[11] transition-all duration-300 ease-in-out ${
-            isScrolled 
-                && `relative min-[991px]:fixed min-[991px]:top-0 min-[991px]:left-0 min-[991px]:right-0 ${isVisible ? 'min-[991px]:translate-y-0' : 'min-[991px]:-translate-y-[162px]'}` 
-            } ${isScrolled
-                ? 'bg-white backdrop-blur-md shadow-lg'
-                : 'bg-white backdrop-blur-sm shadow-sm'
-            }`}>
+    }; return (
+        <nav className={`bg-brand-white transition-all duration-300 ease-in-out text-black px-5 min-[440px]:px-14 z-[11] 
+            ${ isDesktopScreen ? (isScrolled ? `relative min-[991px]:fixed min-[991px]:top-0 min-[991px]:left-0 min-[991px]:right-0 ${isVisible ? 'min-[991px]:translate-y-0' : 'min-[991px]:-translate-y-[162px]'} backdrop-blur-md shadow-lg`
+            : 'relative min-[991px]:relative backdrop-blur-sm shadow-sm') : 'relative' }`}>
             {/* Logo Div */}
             <div className="flex items-center justify-between pt-6 pb-6 min-[991px]:pb-14">
                 {/* NavLogo */}
@@ -123,18 +137,16 @@ export default function Navbar() {
                         <Link className='' href={'/contact'}>Contact</Link>
                     </li>
                 </ul>
-            </div>
-
-            {/* Mobile Menu Overlay */}
+            </div>            {/* Mobile Menu Overlay */}
             {isMobileMenuOpen && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-50 min-[991px]:hidden"
+                    className="fixed inset-0 bg-black/50 z-[70] min-[991px]:hidden"
                     onClick={closeMobileMenu}
                 ></div>
             )}
 
             {/* Mobile Side Menu */}
-            <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out min-[991px]:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                 }`}>
                 {/* Mobile Menu Header */}
                 <div className="flex items-center justify-between p-6 border-b border-gray-200">
