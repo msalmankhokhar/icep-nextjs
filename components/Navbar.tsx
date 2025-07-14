@@ -52,10 +52,10 @@ export default function Navbar() {
                         <Link className='' href={'#'}>Courses</Link>
                     </li>
                     <li className={`rounded-[4px] px-5 py-3 flex items-center justify-center text-center border-r border-gray-500 ${isActive('/success-stories') ? 'bg-brand-yellow text-black' : ''}`}>
-                        <Link className='' href={'#'}>Success Stories</Link>
+                        <Link className='' href={'/#success-stories-section'}>Success Stories</Link>
                     </li>
                     <li className={`rounded-[4px] px-5 py-3 flex items-center justify-center text-center border-r border-gray-500 ${isActive('/faqs') ? 'bg-brand-yellow text-black' : ''}`}>
-                        <Link className='' href={'#'}>FAQs</Link>
+                        <Link className='' href={'/contact/#faqs-section'}>FAQs</Link>
                     </li>
                     <li className={`rounded-[4px] px-5 py-3 flex items-center justify-center text-center border-r border-gray-500 ${isActive('/past-papers') ? 'bg-brand-yellow text-black' : ''}`}>
                         <Link className='' href={'/past-papers'}>Past Papers</Link>

@@ -575,7 +575,7 @@ export function OurResults() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-brand-white to-white">
+    <section id='success-stories-section' className="py-20 bg-gradient-to-br from-brand-white to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold heading-font text-brand-blue mb-4">

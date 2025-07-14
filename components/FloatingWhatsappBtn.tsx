@@ -8,7 +8,7 @@ export default function FloatingWhatsappBtn() {
         <FloatingWhatsApp
             phoneNumber={phoneNumber.withCountryCode}
             accountName="ICEP"
-            avatar="/images/logos/avatars/avatar-blue-bg.png"
+            avatar="/images/logos/avatars/avatar.png"
             buttonStyle={{ width: '45px', height: '45px' }}
             statusMessage='Replies within 1 minute'
         />
