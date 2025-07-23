@@ -79,11 +79,11 @@ export default function CourseCard({
             </ul>
           </div>
 
-          <div className={`${poster ? 'mt-4 pt-4' : 'mt-6 pt-6'} border-t border-white/20`}>
+          {/* <div className={`${poster ? 'mt-4 pt-4' : 'mt-6 pt-6'} border-t border-white/20`}>
             <button className="btn w-full bg-white text-brand-blue hover:bg-gray-100">
               Learn More
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </motion.div>

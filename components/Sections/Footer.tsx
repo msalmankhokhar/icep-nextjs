@@ -86,11 +86,24 @@ export default function Footer() {
                         </li>
                     </ul>
                 </motion.div>
+            </div>            
+            <div className="px-6 md:px-12 lg:px-24 text-center mt-16 border-t border-brand-blue-400 pt-6 pb-6 text-sm text-brand-blue-400/90 bg-white">
+                <div className="mb-2">
+                    © {new Date().getFullYear()} ICEP CSS Institute. All rights reserved.
+                </div>
+                <div className="text-xs text-brand-blue-300">
+                    Developed by{' '}
+                    <Link 
+                        href="https://www.linkedin.com/in/msalmankhokhar/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-brand-blue hover:text-brand-blue-400 transition-colors duration-200 font-medium"
+                    >
+                        Salman Malik
+                    </Link>
+                </div>
             </div>
-
-            <div className="px-6 md:px-12 lg:px-24 text-center mt-16 border-t border-brand-blue-400 pt-6 pb-8 text-sm text-brand-blue-400/90 bg-brand-white">
-                © {new Date().getFullYear()} ICEP CSS Institute. All rights reserved.
-            </div>
+            
         </footer>
     );
 }

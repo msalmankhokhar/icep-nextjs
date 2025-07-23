@@ -5,7 +5,7 @@ import CampusLifeSection from "@/components/Sections/CampusLifeSection";
 import Footer from "@/components/Sections/Footer";
 import Topbar from "@/components/Topbar";
 import Navbar from "@/components/Navbar";
-import { CSSOverviewSection, ProgramsAndCourses, TestSeriesSection, MagazineAndBlog, PastPapersTeaser, OurResults } from "@/components/Sections/HomeSections";
+import { CSSOverviewSection, ProgramsAndCourses, TestSeriesSection, MagazineAndBlog, PastPapersTeaser, OurResults, VideoReviews } from "@/components/Sections/HomeSections";
 
 export default function Home() {
   return (
@@ -19,9 +19,9 @@ export default function Home() {
         <CampusLifeSection />
         <CSSOverviewSection />
         <PastPapersTeaser />
-        <ProgramsAndCourses />
-        <TestSeriesSection />
+        <ProgramsAndCourses />        <TestSeriesSection />
         <AboutSectionTwo />
+        <VideoReviews />
         <OurResults />
         <MagazineAndBlog />
       </main>

@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
+import type { SwiperRef } from 'swiper/react';
 import { PiExamBold, PiBookOpenTextBold, PiBrainBold, PiNewspaperClippingBold, PiFlagBold, PiHandsPrayingBold, PiBuildings } from 'react-icons/pi';
 import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
 import CourseCard from '@/components/CourseCard';
+import { phoneNumber } from '@/Constants';
 
 // Counting Number Animation Component
 function CountingNumber({ target, duration = 2000, suffix = '' }: { target: number; duration?: number; suffix?: string }) {
@@ -444,7 +446,7 @@ export function ProgramsAndCourses() {  const programs = [
       duration: "8 Months",
       description: "Intensive crash course designed for focused preparation with proven strategies.",
       features: ["Intensive Training", "Expert Faculty", "Regular Assessments", "Career Counseling"],
-      color: "bg-brand-blue-700",
+      color: "bg-brand-red-800",
       hoverColor: "hover:bg-brand-blue-800",
       badge: "Best Value",
       poster: undefined,
@@ -464,7 +466,7 @@ export function ProgramsAndCourses() {  const programs = [
   ];
 
   return (
-    <section className="py-20 bg-white text-brand-blue px-6 md:px-12 lg:px-20">
+    <section id='courses-section' className="py-20 bg-white text-brand-blue px-6 md:px-12 lg:px-20">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -505,15 +507,15 @@ export function ProgramsAndCourses() {  const programs = [
           className="text-center mt-12"
         >
           <div className="bg-gradient-to-r from-brand-blue to-brand-blue-700 text-white p-8 rounded-2xl shadow-xl">
-            <h3 className="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
+            <h3 className="text-2xl font-bold mb-4">Physical as well as Online Classes are available</h3>
             <p className="text-brand-blue-100 mb-6">
               Join thousands of successful candidates who achieved their dreams with ICEP Institute
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/courses" className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-400">
+              {/* <Link href="/courses" className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-400">
                 View All Programs
-              </Link>
-              <Link href="/contact" className="btn border-2 border-white text-white hover:bg-white hover:text-brand-blue">
+              </Link> */}
+              <Link href={`tel:${phoneNumber.withCountryCode}`} className="btn border-2 border-white text-white hover:bg-white hover:text-brand-blue">
                 Contact Admissions
               </Link>
             </div>
@@ -627,7 +629,7 @@ export function OurResults() {
   ];
 
   return (
-    <section id='success-stories-section' className="py-20 bg-gradient-to-br from-brand-white to-white">
+    <section className="py-20 bg-gradient-to-br from-brand-white to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold heading-font text-brand-blue mb-4">
@@ -699,7 +701,7 @@ export function OurResults() {
             <div className="relative z-10">
               <div className="text-center mb-10">
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                  Our Success Story
+                  Our Experience
                 </h3>
                 <p className="text-brand-blue-100 text-lg max-w-2xl mx-auto">
                   15 years of excellence in nurturing Pakistan&apos;s future leaders
@@ -819,3 +821,188 @@ export function OurResults() {
     </section>
   );
 }
+
+export function VideoReviews() {
+  const swiperRef = React.useRef<SwiperRef | null>(null);
+  
+  const videoReviews = [
+    {
+      embedUrl: "https://www.youtube.com/embed/9W8b6LOhWEs?si=6fe0rBkITyhsP6m7&enablejsapi=1",
+      title: "CSS Success Story - Muhammad Ahmed",
+      description: "How ICEP helped me secure 25th position"
+    },
+    {
+      embedUrl: "https://www.youtube.com/embed/qndlMZFo3P4?si=sAOSQzU45rsuyoMN&enablejsapi=1",
+      title: "From Dreams to Reality - Ayesha Khan",
+      description: "My journey from student to Deputy Commissioner"
+    },
+    {
+      embedUrl: "https://www.youtube.com/embed/GkgSQQDuDWk?si=kBPUf408nVaa-Ngy&enablejsapi=1",
+      title: "PMS Success Story - Ali Hassan",
+      description: "How ICEP's guidance led me to PMS success"
+    },
+    {
+      embedUrl: "https://www.youtube.com/embed/01Zrx8YQ4HI?si=aEOHE-AkH6FyoCGR&enablejsapi=1",
+      title: "Interview Preparation Tips",
+      description: "Former ICEP student shares interview experience"
+    }
+  ];
+
+  // Handle iframe interactions to control autoplay
+  const handleIframeInteraction = (action: 'play' | 'pause') => {
+    if (swiperRef.current && swiperRef.current.swiper.autoplay) {
+      if (action === 'play') {
+        swiperRef.current.swiper.autoplay.stop();
+      } else {
+        swiperRef.current.swiper.autoplay.start();
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    // Listen for YouTube API messages
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://www.youtube.com') return;
+      
+      try {
+        const data = JSON.parse(event.data);
+        if (data.event === 'video-progress') {
+          if (data.info && data.info.playerState === 1) { // Playing
+            handleIframeInteraction('play');
+          } else if (data.info && (data.info.playerState === 2 || data.info.playerState === 0)) { // Paused or Ended
+            handleIframeInteraction('pause');
+          }
+        }
+      } catch {
+        // Ignore parsing errors
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
+  return (
+    <section id='success-stories-section' className="pt-20 bg-brand-white">
+      <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold heading-font text-brand-blue mb-4">
+            Success Stories
+          </h2>          <p className="text-lg text-brand-blue-400 max-w-3xl mx-auto">
+            Hear directly from our successful students who achieved their dreams with ICEP&apos;s guidance and support
+          </p>
+        </motion.div>
+
+        {/* Video Reviews Swiper */}        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <Swiper
+            ref={swiperRef}
+            modules={[Autoplay, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            centeredSlides={true}
+            autoplay={{
+              delay: 8000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{
+              clickable: true,
+              bulletClass: 'swiper-pagination-bullet !bg-brand-blue-300',
+              bulletActiveClass: 'swiper-pagination-bullet-active !bg-brand-blue',
+            }}
+            breakpoints={{
+              640: {
+                slidesPerView: 1,
+                centeredSlides: false,
+              },
+              768: {
+                slidesPerView: 2,
+                centeredSlides: false,
+              },
+              1024: {
+                slidesPerView: 3,
+                centeredSlides: false,
+              },
+            }}
+            className="video-reviews-swiper pb-16"
+          >
+            {videoReviews.map((video, index) => (
+              <SwiperSlide key={index}>
+                <div 
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+                  onMouseEnter={() => handleIframeInteraction('play')}
+                  onMouseLeave={() => handleIframeInteraction('pause')}
+                >
+                  {/* Video Container */}
+                  <div className="relative aspect-video bg-gray-100">
+                    <iframe
+                      src={video.embedUrl}
+                      title={video.title}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                  
+                  {/* Video Details */}
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-brand-blue mb-2 group-hover:text-brand-blue-700 transition-colors">
+                      {video.title}
+                    </h3>
+                    <p className="text-brand-blue-600 text-sm leading-relaxed">
+                      {video.description}
+                    </p>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </motion.div>
+
+        {/* Call to Action */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-12"
+        >
+          <div className="bg-white rounded-xl shadow-lg p-8 border border-brand-blue-100">
+            <h3 className="text-2xl font-bold text-brand-blue mb-4 heading-font">
+              Ready to Write Your Success Story?
+            </h3>            <p className="text-brand-blue-600 mb-6 max-w-2xl mx-auto">
+              Join hundreds of successful candidates who achieved their goals with ICEP&apos;s proven methodology and expert guidance.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link
+                href="/contact"
+                className="btn bg-brand-blue text-white hover:bg-brand-blue-700"
+              >
+                Start Your Journey
+              </Link>
+              <Link
+                href="/about"
+                className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-600"
+              >
+                Learn About ICEP
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+

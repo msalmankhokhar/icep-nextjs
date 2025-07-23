@@ -4,20 +4,27 @@ import { useEffect, useState } from 'react';
 import { EyeIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 
 interface ViewCounterProps {
-  paperId: string;
-  subjectName: string;
+  paperId?: string;
+  subjectName?: string;
+  type?: 'paper' | 'magazine';
 }
 
-const ViewCounter = ({ paperId, subjectName }: ViewCounterProps) => {
+const ViewCounter = ({ paperId, subjectName, type = 'paper' }: ViewCounterProps) => {
   const [totalViews, setTotalViews] = useState(0);
   const [currentViewers, setCurrentViewers] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
-
   useEffect(() => {
-    // Generate random but consistent data based on paper ID
+    // Generate random but consistent data based on paper ID or generate random for magazines
     const generateViewData = () => {
-      // Create a simple hash from paperId to ensure consistency
-      const hash = paperId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      let hash = 0;
+      
+      if (paperId) {
+        // Create a simple hash from paperId to ensure consistency
+        hash = paperId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      } else {
+        // For magazines without paperId, use current time for some randomness
+        hash = Date.now() % 1000;
+      }
       
       // Generate total views (between 150-850)
       const baseViews = 150 + (hash % 700);
@@ -83,10 +90,12 @@ const ViewCounter = ({ paperId, subjectName }: ViewCounterProps) => {
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
           <span className="text-brand-blue-400 text-xs">Live</span>
         </div>
-      </div>
-      
+      </div>      
       <div className="mt-2 text-xs text-brand-blue-400">
-        Popular among {subjectName} aspirants
+        {type === 'magazine' 
+          ? 'Popular educational resource' 
+          : `Popular among ${subjectName} aspirants`
+        }
       </div>
     </div>
   );

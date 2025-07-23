@@ -6,6 +6,7 @@ import { motion, useAnimation } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import 'swiper/css';
+import Link from 'next/link';
 
 const slides: string[] = [
   '/images/hero-section/1.jpg',
@@ -57,13 +58,15 @@ export default function HeroSectionSwiper() {
       {/* Overlayed Content */}
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-white text-center">
         <motion.h1
-          className="text-4xl md:text-5xl font-bold leading-normal max-w-3xl heading-font"
+          className="text-2xl md:text-4xl font-bold leading-relaxed max-w-5xl mx-auto heading-font"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
           {/* text-[#ff0000] for css */}
-          Kick Start your <span className="bg-brand-yellow mx-0.5 text-black px-4 rounded text-nowrap"><span>CSS</span> <span className="">2026</span></span> Journey with Us
+          <div className='text-center mb-2'>Kick Start your</div>  
+          <div className="text-4xl mb-1 max-w-2xl md:text-5xl leading-tight text-center bg-brand-yellow text-black px-1.5 py-1 rounded">CSS 2026 prime session | 2027 annual session</div> 
+          <div className='text-center'>With Us</div>
         </motion.h1>
 
         <motion.p
@@ -81,18 +84,18 @@ export default function HeroSectionSwiper() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <a
-            href="#courses"
+          <Link
+            href="/#courses-section"
             className="bg-red-700 text-nowrap w-full max-w-[270px] min-[380px]:w-auto hover:bg-red-700/90 text-white btn"
           >
             Explore Courses
-          </a>
-          <a
-            href="#contact"
+          </Link>
+          <Link
+            href="/contact"
             className="border text-nowrap w-full max-w-[270px] min-[380px]:w-auto text-brand-blue bg-brand-white hover:bg-white hover:text-black btn"
           >
             📞 Contact Us
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>
