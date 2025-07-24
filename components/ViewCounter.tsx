@@ -12,28 +12,57 @@ interface ViewCounterProps {
 const ViewCounter = ({ paperId, subjectName, type = 'paper' }: ViewCounterProps) => {
   const [totalViews, setTotalViews] = useState(0);
   const [currentViewers, setCurrentViewers] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
+  const [isLoaded, setIsLoaded] = useState(false);  useEffect(() => {
     // Generate random but consistent data based on paper ID or generate random for magazines
     const generateViewData = () => {
-      let hash = 0;
+      const storageKey = paperId ? `views_${paperId}` : `views_${subjectName || 'magazine'}_${type}`;
       
-      if (paperId) {
-        // Create a simple hash from paperId to ensure consistency
-        hash = paperId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+      // Check if we have stored data
+      const storedData = localStorage.getItem(storageKey);
+      
+      if (storedData) {
+        const { totalViews: storedViews, timestamp } = JSON.parse(storedData);
+        const now = Date.now();
+        const hoursSinceLastVisit = (now - timestamp) / (1000 * 60 * 60);
+        
+        // Add realistic growth based on time passed (1-3 views per hour)
+        const additionalViews = Math.floor(hoursSinceLastVisit * (1 + Math.random() * 2));
+        const newTotalViews = storedViews + additionalViews;
+        
+        setTotalViews(newTotalViews);
+        
+        // Update localStorage with new data
+        localStorage.setItem(storageKey, JSON.stringify({
+          totalViews: newTotalViews,
+          timestamp: now
+        }));
       } else {
-        // For magazines without paperId, use current time for some randomness
-        hash = Date.now() % 1000;
+        // First time visit - generate initial data
+        let hash = 0;
+        
+        if (paperId) {
+          // Create a simple hash from paperId to ensure consistency
+          hash = paperId.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        } else {
+          // For magazines without paperId, use subject name or type
+          const hashString = subjectName || type || 'default';
+          hash = hashString.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+        }
+          // Generate total views (between 250-370)
+        const baseViews = 250 + (hash % 120);
+        const views = baseViews + Math.floor(Math.random() * 50);
+        
+        setTotalViews(views);
+        
+        // Store initial data
+        localStorage.setItem(storageKey, JSON.stringify({
+          totalViews: views,
+          timestamp: Date.now()
+        }));
       }
-      
-      // Generate total views (between 150-850)
-      const baseViews = 150 + (hash % 700);
-      const views = baseViews + Math.floor(Math.random() * 50);
       
       // Generate current viewers (between 2-15)
       const viewers = 2 + Math.floor(Math.random() * 14);
-      
-      setTotalViews(views);
       setCurrentViewers(viewers);
       setIsLoaded(true);
     };
@@ -41,7 +70,7 @@ const ViewCounter = ({ paperId, subjectName, type = 'paper' }: ViewCounterProps)
     // Add small delay for better UX
     const timer = setTimeout(generateViewData, 300);
     return () => clearTimeout(timer);
-  }, [paperId]);
+  }, [paperId, subjectName, type]);
 
   // Update current viewers every 5-10 seconds
   useEffect(() => {
