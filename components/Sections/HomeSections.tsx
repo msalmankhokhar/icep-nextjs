@@ -1006,3 +1006,127 @@ export function VideoReviews() {
   );
 }
 
+export function IeltsSection() {
+  return (
+    <section className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold heading-font text-brand-blue mb-4">
+            IELTS Preparation at ICEP Institute
+          </h2>
+          <p className="text-lg text-brand-blue-400 max-w-3xl mx-auto">
+            Achieve your dream IELTS score with our comprehensive preparation program. 
+            Our expert instructors and proven methodology help students excel in all four skills.
+          </p>
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <PiBookOpenTextBold className="w-12 h-12 text-blue-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-brand-blue">Expert Training</h3>
+            <p className="text-brand-blue-600">Comprehensive coverage of Reading, Writing, Listening, and Speaking</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <PiBrainBold className="w-12 h-12 text-green-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-brand-blue">Small Batches</h3>
+            <p className="text-brand-blue-600">Personalized attention with limited students per batch</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <PiExamBold className="w-12 h-12 text-purple-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-brand-blue">Proven Results</h3>
+            <p className="text-brand-blue-600">High success rate with students achieving target band scores</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
+          >
+            <PiNewspaperClippingBold className="w-12 h-12 text-red-600 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold mb-2 text-brand-blue">Mock Tests</h3>
+            <p className="text-brand-blue-600">Regular practice tests to track progress and build confidence</p>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="bg-white rounded-lg shadow-lg p-8"
+        >
+          <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 className="text-2xl font-bold text-brand-blue mb-4">
+                Why Choose ICEP for IELTS?
+              </h3>
+              <ul className="space-y-3 text-brand-blue-600">
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  Experienced certified IELTS trainers
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  Updated study materials and practice tests
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  Flexible batch timings for working professionals
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  Individual feedback and progress tracking
+                </li>
+                <li className="flex items-start">
+                  <span className="w-2 h-2 bg-blue-600 rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                  Speaking practice sessions with native speakers
+                </li>
+              </ul>
+            </div>
+            <div className="text-center">
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg p-6">
+                <h4 className="text-xl font-semibold mb-2">Ready to Start?</h4>
+                <p className="mb-4">Join our next IELTS batch and achieve your target score</p>
+                <Link
+                  href={`tel:${phoneNumber.withCountryCode}`}
+                  className="bg-white text-blue-600 px-6 py-3 rounded-md font-semibold hover:bg-gray-100 transition-colors inline-block"
+                >
+                  Enroll Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
