@@ -511,11 +511,11 @@ export function ProgramsAndCourses() {  const programs = [
             <p className="text-brand-blue-100 mb-6">
               Join thousands of successful candidates who achieved their dreams with ICEP Institute
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* <Link href="/courses" className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-400">
-                View All Programs
-              </Link> */}
-              <Link href={`tel:${phoneNumber.withCountryCode}`} className="btn border-2 border-white text-white hover:bg-white hover:text-brand-blue">
+            <div className="flex flex-col items-center justify-center gap-4 w-full">
+              <Link 
+                href={`tel:${phoneNumber.withCountryCode}`} 
+                className="inline-block bg-white text-brand-blue font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors shadow-lg w-full max-w-xs text-center"
+              >
                 Contact Admissions
               </Link>
             </div>
@@ -982,19 +982,20 @@ export function VideoReviews() {
           <div className="bg-white rounded-xl shadow-lg p-8 border border-brand-blue-100">
             <h3 className="text-2xl font-bold text-brand-blue mb-4 heading-font">
               Ready to Write Your Success Story?
-            </h3>            <p className="text-brand-blue-600 mb-6 max-w-2xl mx-auto">
+            </h3>
+            <p className="text-brand-blue-600 mb-6 max-w-2xl mx-auto">
               Join hundreds of successful candidates who achieved their goals with ICEP&apos;s proven methodology and expert guidance.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col items-center justify-center gap-4 w-full">
               <Link
                 href="/contact"
-                className="btn bg-brand-blue text-white hover:bg-brand-blue-700"
+                className="bg-brand-blue text-white font-semibold px-8 py-3 rounded-lg hover:bg-brand-blue-700 transition-colors shadow-lg w-full max-w-xs text-center"
               >
                 Start Your Journey
               </Link>
               <Link
                 href="/about"
-                className="btn bg-brand-yellow text-brand-blue hover:bg-brand-yellow-600"
+                className="bg-brand-yellow text-brand-blue font-semibold px-8 py-3 rounded-lg hover:bg-brand-yellow-600 transition-colors shadow-lg w-full max-w-xs text-center"
               >
                 Learn About ICEP
               </Link>
