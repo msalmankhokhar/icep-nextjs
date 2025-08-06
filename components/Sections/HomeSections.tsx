@@ -562,7 +562,7 @@ export function TestSeriesSection() {
               {/* Main large image */}
               <div className="col-span-2">
                 <Image 
-                  src="/images/campus-life/1.jpg" 
+                  src="/images/test-series/test-environment.jpg" 
                   alt="CSS Test Environment" 
                   width={500}
                   height={192}
@@ -573,7 +573,7 @@ export function TestSeriesSection() {
               {/* Two smaller images */}
               <div>
                 <Image 
-                  src="/images/campus-life/2.jpg" 
+                  src="/images/test-series/mock-tests.jpg" 
                   alt="Mock Tests" 
                   width={250}
                   height={128}
@@ -583,7 +583,7 @@ export function TestSeriesSection() {
               
               <div>
                 <Image 
-                  src="/images/campus-life/3.jpg" 
+                  src="/images/test-series/interview-prep.jpg" 
                   alt="Interview Preparation" 
                   width={250}
                   height={128}
