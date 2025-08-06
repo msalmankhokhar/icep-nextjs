@@ -828,22 +828,22 @@ export function VideoReviews() {
   const videoReviews = [
     {
       embedUrl: "https://www.youtube.com/embed/9W8b6LOhWEs?si=6fe0rBkITyhsP6m7&enablejsapi=1",
-      title: "CSS Success Story - Muhammad Ahmed",
+      title: "Why was #ICEP my first choice for #css preparation?!",
       description: "How ICEP helped me secure 25th position"
     },
     {
       embedUrl: "https://www.youtube.com/embed/qndlMZFo3P4?si=sAOSQzU45rsuyoMN&enablejsapi=1",
-      title: "From Dreams to Reality - Ayesha Khan",
-      description: "My journey from student to Deputy Commissioner"
+      title: "Why ICEP's Topic Wise Test Series for #CSS25?",
+      description: "Complete guide to our comprehensive test series program"
     },
     {
       embedUrl: "https://www.youtube.com/embed/GkgSQQDuDWk?si=kBPUf408nVaa-Ngy&enablejsapi=1",
-      title: "PMS Success Story - Ali Hassan",
-      description: "How ICEP's guidance led me to PMS success"
+      title: "Listen to it by Topper Dr. Shaher Bano if are you a beginner for CSS26 Exam",
+      description: "Topper Dr. Shaher Bano shares her journey with ICEP"
     },
     {
       embedUrl: "https://www.youtube.com/embed/01Zrx8YQ4HI?si=aEOHE-AkH6FyoCGR&enablejsapi=1",
-      title: "Interview Preparation Tips",
+      title: "Mock Interview Review by Special CSS23 Topper Zuha Tiwana @ ICEP CSS Institute",
       description: "Former ICEP student shares interview experience"
     }
   ];
@@ -941,6 +941,7 @@ export function VideoReviews() {
               <SwiperSlide key={index}>
                 <div 
                   className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group"
+                  style={{ height: '420px' }}
                   onMouseEnter={() => handleIframeInteraction('play')}
                   onMouseLeave={() => handleIframeInteraction('pause')}
                 >
@@ -958,10 +959,19 @@ export function VideoReviews() {
                   
                   {/* Video Details */}
                   <div className="p-6">
-                    <h3 className="text-lg font-bold text-brand-blue mb-2 group-hover:text-brand-blue-700 transition-colors">
+                    <h3 className="text-lg font-bold text-brand-blue mb-2 group-hover:text-brand-blue-700 transition-colors overflow-hidden text-ellipsis" style={{ 
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      minHeight: '3.5rem'
+                    }}>
                       {video.title}
                     </h3>
-                    <p className="text-brand-blue-600 text-sm leading-relaxed">
+                    <p className="text-brand-blue-600 text-sm leading-relaxed overflow-hidden text-ellipsis" style={{
+                      display: '-webkit-box',
+                      WebkitLineClamp: 3,
+                      WebkitBoxOrient: 'vertical'
+                    }}>
                       {video.description}
                     </p>
                   </div>
