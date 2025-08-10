@@ -25,6 +25,11 @@ export function formatMagazineTitle(filename: string): string {
   // Remove file extension
   const nameWithoutExt = filename.replace(/\.pdf$/i, '');
   
+  // Check for specific magazine - multiple variations
+  if (nameWithoutExt.includes('28july_to_03august_2025') && nameWithoutExt.includes('icep') && nameWithoutExt.includes('magazine')) {
+    return 'ICEP Weekly Current Affairs E-Magazine ( July 28 - August 03)';
+  }
+  
   // Extract date range and magazine name
   const match = nameWithoutExt.match(/^(\d{2}\w+)_to_(\d{2}\w+)_(\d{4})-(.+)$/i);
   
