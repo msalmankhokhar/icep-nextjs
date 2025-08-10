@@ -52,7 +52,7 @@ export function extractDateInfo(filename: string): {
 } {
   // Default values
   let year = new Date().getFullYear().toString();
-  let month = 'Unknown';
+  let month = 'july';
   let week = '';
   let publishDate = new Date();
   // Try to extract from pattern like "01july_to_07july_2025-icep-magazine.pdf"
