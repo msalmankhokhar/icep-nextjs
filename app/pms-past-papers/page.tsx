@@ -3,10 +3,7 @@ import Topbar from "@/components/Topbar";
 import Footer from "@/components/Sections/Footer";
 import SubjectCard from "@/components/SubjectCard";
 import Link from "next/link";
-import {
-  getAllSubjects,
-  getPapersBySubject,
-} from "@/utils/pastPapersServerUtils";
+import { getPapersBySubject } from "@/utils/pastPapersServerUtils";
 import {
   PiExamBold,
   PiBookOpenTextBold,
@@ -22,6 +19,7 @@ import {
   PiBuildings,
   PiArrowLeftBold,
 } from "react-icons/pi";
+import { getAllAdminSubjects } from "@/utils/pastPapersAdminUtils";
 
 export const metadata = {
   title: "PMS Past Papers | ICEP Institute",
@@ -31,7 +29,13 @@ export const metadata = {
 
 export default async function PMSPastPapersPage() {
   // Get all PMS subjects
-  const subjectsObject = await getAllSubjects();
+  const adminSubjectObject = await getAllAdminSubjects();
+  const uniqueCompulsorySubjects = Array.from(
+    new Map(adminSubjectObject.pms.comp.map((s) => [s.name, s])).values()
+  );
+  const uniqueOptionalSubjects = Array.from(
+    new Map(adminSubjectObject.pms.optional.map((s) => [s.name, s])).values()
+  );
 
   // Map icons to subjects
   const subjectIcons: Record<string, React.ReactNode> = {
@@ -101,7 +105,7 @@ export default async function PMSPastPapersPage() {
         <section className="py-12 md:py-20 bg-brand-white">
           <div className="container mx-auto px-6 md:px-12">
             {/* PMS Compulsory Subjects */}
-            {subjectsObject.pms.comp.length > 0 ? (
+            {uniqueCompulsorySubjects.length > 0 ? (
               <div className="mb-16">
                 <div className="flex items-center gap-3 mb-8">
                   <div className="w-1 h-8 bg-green-600 rounded-full"></div>
@@ -115,7 +119,7 @@ export default async function PMSPastPapersPage() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {subjectsObject.pms.comp.map(async (subject, index) => {
+                  {uniqueCompulsorySubjects.map(async (subject, index) => {
                     const papers = await getPapersBySubject(subject.name);
                     const paperCount = papers.length;
                     return (
@@ -154,7 +158,7 @@ export default async function PMSPastPapersPage() {
             )}
 
             {/* PMS Optional Subjects */}
-            {subjectsObject.pms.optional.length > 0 ? (
+            {uniqueOptionalSubjects.length > 0 ? (
               <div>
                 <div className="flex items-center gap-3 mb-8">
                   <div className="w-1 h-8 bg-brand-yellow rounded-full"></div>
@@ -169,7 +173,7 @@ export default async function PMSPastPapersPage() {
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {subjectsObject.pms.optional.map(async (subject, index) => {
+                  {uniqueOptionalSubjects.map(async (subject, index) => {
                     const papers = await getPapersBySubject(subject.name);
                     const paperCount = papers.length;
                     return (
