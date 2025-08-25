@@ -4,7 +4,6 @@ import Footer from "@/components/Sections/Footer";
 import SubjectCard from "@/components/SubjectCard";
 import Link from "next/link";
 import {
-  getAllSubjects,
   getPapersBySubject,
 } from "@/utils/pastPapersServerUtils";
 import {
@@ -24,7 +23,6 @@ import {
 } from "react-icons/pi";
 import {
   getAllAdminSubjects,
-  searchPastPapers,
 } from "@/utils/pastPapersAdminUtils";
 
 export const metadata = {

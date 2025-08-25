@@ -12,7 +12,6 @@ import {
 
 import {
   getPapersBySubject,
-  getAllSubjects,
 } from "@/utils/pastPapersServerUtils";
 import { getAllAdminSubjects } from "@/utils/pastPapersAdminUtils";
 

@@ -114,8 +114,12 @@ export default function AddMagazinePage() {
 
       const data = await res.json();
       return data.url;
-    } catch (err: any) {
-      throw new Error(err.message || "Unexpected error while uploading");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        throw new Error(err.message || "Unexpected error while uploading");
+      } else {
+        throw new Error("Unexpected error while uploading");
+      }
     }
   };
 
@@ -168,13 +172,13 @@ export default function AddMagazinePage() {
     try {
       // Upload to Vercel Blob
       const vercelBlobURL = await uploadToVercelBlob(selectedFile);
-      console.log(vercelBlobURL)
+      console.log(vercelBlobURL);
 
       // Generate unique magazine ID
       const magazineId = `${formData.week}_${formData.month}_${
         formData.year
       }_${Date.now()}`;
-      console.log(magazineId)
+      console.log(magazineId);
       // Create magazine object
       const magazineData: Magazine = {
         id: magazineId,
@@ -187,7 +191,7 @@ export default function AddMagazinePage() {
         fileUrl: vercelBlobURL,
         publishDate: new Date(),
       };
-      console.log(magazineData)
+      console.log(magazineData);
       // Save magazine data
       await saveMagazineData(magazineData);
 

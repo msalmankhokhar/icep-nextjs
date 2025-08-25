@@ -5,7 +5,6 @@ import Topbar from "@/components/Topbar";
 import Footer from "@/components/Sections/Footer";
 import Link from "next/link";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
-import { getPaperById } from "@/utils/pastPapersServerUtils";
 import { formatSubjectForUrl } from "@/utils/pastPapersTypes";
 import PDFViewerWrapper from "@/components/PDFViewerWrapper";
 import ViewCounter from "@/components/ViewCounter";

@@ -8,11 +8,11 @@ const dataDirectory = path.join(process.cwd(), "data");
 const magazinesFile = path.join(dataDirectory, "magazines.json");
 
 // Helper function to read magazines from JSON file
-function readMagazinesFromJson(): any[] {
+function readMagazinesFromJson(): unknown[] {
   try {
     if (fs.existsSync(magazinesFile)) {
       const data = fs.readFileSync(magazinesFile, "utf-8");
-      return JSON.parse(data);
+      return JSON.parse(data) as unknown[];
     }
     return [];
   } catch (error) {
@@ -22,7 +22,7 @@ function readMagazinesFromJson(): any[] {
 }
 
 // Helper function to write magazines to JSON file
-function writeMagazinesToJson(magazines: any[]): void {
+function writeMagazinesToJson(magazines: unknown[]): void {
   try {
     // Ensure data directory exists
     if (!fs.existsSync(dataDirectory)) {
@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
     // Check if the request is JSON or form data
     const contentType = request.headers.get("content-type");
 
-    let magazineData: any;
+    let magazineData: unknown;
 
     if (contentType?.includes("application/json")) {
       // Handle JSON data (from addMagazine page)
@@ -119,7 +119,7 @@ export async function POST(request: NextRequest) {
       };
     }
 
-    // Extract fields
+    // Extract fields 
     const {
       title,
       description,
@@ -130,7 +130,17 @@ export async function POST(request: NextRequest) {
       fileUrl,
       filePath,
       id,
-    } = magazineData;
+    } = magazineData as {
+      title: string;
+      description?: string;
+      week: string;
+      month: string;
+      year: string;
+      file?: File;
+      fileUrl?: string;
+      filePath?: string;
+      id?: string;
+    };
 
     // Validate required fields
     if (!title || !week || !month || !year) {

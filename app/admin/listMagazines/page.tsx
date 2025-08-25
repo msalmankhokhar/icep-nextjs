@@ -40,10 +40,12 @@ export default function ListMagazines() {
 
         if (result.success) {
           // Convert ISO date strings back to Date objects
-          const magazinesWithDates = result.data.map((magazine: any) => ({
-            ...magazine,
-            publishDate: new Date(magazine.publishDate),
-          }));
+          const magazinesWithDates = result.data.map(
+            (magazine: Record<string, unknown>) => ({
+              ...magazine,
+              publishDate: new Date(magazine.publishDate as string),
+            })
+          );
           setMagazines(magazinesWithDates);
         } else {
           setError(result.error || "Failed to fetch magazines");
@@ -91,7 +93,7 @@ export default function ListMagazines() {
 
   // Filter and sort magazines
   const filteredAndSortedMagazines = useMemo(() => {
-    let filtered = magazines.filter((magazine) => {
+    const filtered = magazines.filter((magazine) => {
       const matchesSearch =
         magazine.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         magazine.year.includes(searchQuery) ||
@@ -104,9 +106,12 @@ export default function ListMagazines() {
 
     // Sort magazines
     filtered.sort((a, b) => {
-      let aValue: any = a[sortField];
-      let bValue: any = b[sortField];
-
+      let aValue: string | number = a[sortField as keyof Magazine] as
+        | string
+        | number;
+      let bValue: string | number = b[sortField as keyof Magazine] as
+        | string
+        | number;
       if (sortField === "publishDate") {
         aValue = a.publishDate.getTime();
         bValue = b.publishDate.getTime();

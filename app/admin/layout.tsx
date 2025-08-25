@@ -15,6 +15,7 @@ export default function AdminLayout({
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
+  console.log(currentUser)
 
   // Check if current page is login page
   const isLoginPage = pathname === "/admin/login";

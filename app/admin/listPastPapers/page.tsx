@@ -15,7 +15,6 @@ import {
   LuChevronDown,
   LuLoader,
   LuBookOpen,
-  LuGraduationCap,
 } from "react-icons/lu";
 
 export default function ListPastPapers() {
@@ -45,10 +44,12 @@ export default function ListPastPapers() {
 
         if (result.success) {
           // Convert ISO date strings back to Date objects
-          const papersWithDates = result.data.map((paper: any) => ({
-            ...paper,
-            uploadDate: new Date(paper.uploadDate),
-          }));
+          const papersWithDates = result.data.map(
+            (paper: Record<string, unknown>) => ({
+              ...paper,
+              uploadDate: new Date(paper.uploadDate as string),
+            })
+          );
           setPastPapers(papersWithDates);
         } else {
           setError(result.error || "Failed to fetch past papers");
@@ -94,7 +95,7 @@ export default function ListPastPapers() {
 
   // Filter and sort past papers
   const filteredAndSortedPapers = useMemo(() => {
-    let filtered = pastPapers.filter((paper) => {
+    const filtered = pastPapers.filter((paper) => {
       const matchesSearch =
         paper.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         paper.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -119,8 +120,14 @@ export default function ListPastPapers() {
 
     // Sort papers
     filtered.sort((a, b) => {
-      let aValue: any = a[sortField];
-      let bValue: any = b[sortField];
+      let aValue: string | number | Date = a[sortField as keyof typeof a] as
+        | string
+        | number
+        | Date;
+      let bValue: string | number | Date = b[sortField as keyof typeof b] as
+        | string
+        | number
+        | Date;
 
       if (sortField === "uploadDate") {
         aValue = a.uploadDate.getTime();

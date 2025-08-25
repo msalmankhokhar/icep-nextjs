@@ -53,7 +53,7 @@ export default function AdminHomepage() {
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-brand-blue">Dashboard</h1>
           <p className="text-gray-600 mt-1">
-            Welcome back! Here's what's happening with your data.
+            Welcome back! Here&apos;s what&apos;s happening with your data.
           </p>
         </div>
 
