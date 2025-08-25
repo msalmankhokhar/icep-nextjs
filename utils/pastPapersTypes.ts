@@ -10,7 +10,7 @@ export interface PastPaperSubject {
 export interface PastPaper {
   id: string;
   title: string;
-  subject: PastPaperSubject;
+  subject: string;
   year: string;
   yearRange: string;
   filePath: string;

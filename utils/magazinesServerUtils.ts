@@ -1,15 +1,25 @@
-import 'server-only';
-import * as fs from 'node:fs';
-import * as path from 'node:path';
-import { Magazine, MagazineGroup, MagazineByMonth, extractDateInfo, getMonthNumber } from './magazinesTypes';
+import "server-only";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import {
+  Magazine,
+  MagazineGroup,
+  MagazineByMonth,
+  extractDateInfo,
+  getMonthNumber,
+} from "./magazinesTypes";
 
-const magazinesDirectory = path.join(process.cwd(), 'public/docs/magazines');
+const magazinesDirectory = path.join(process.cwd(), "public/docs/magazines");
+const dataDirectory = path.join(process.cwd(), "data");
+const magazinesFile = path.join(dataDirectory, "magazines.json");
 
 // Helper function to safely read directory
 function safeReadDir(dirPath: string): string[] {
   try {
     if (fs.existsSync(dirPath)) {
-      return fs.readdirSync(dirPath).filter(file => file.toLowerCase().endsWith('.pdf'));
+      return fs
+        .readdirSync(dirPath)
+        .filter((file) => file.toLowerCase().endsWith(".pdf"));
     }
     return [];
   } catch (error) {
@@ -18,36 +28,69 @@ function safeReadDir(dirPath: string): string[] {
   }
 }
 
-// Get all magazines from the filesystem
+// Helper function to read magazines from JSON file
+function readMagazinesFromJson(): Magazine[] {
+  try {
+    if (fs.existsSync(magazinesFile)) {
+      const data = fs.readFileSync(magazinesFile, "utf-8");
+      const magazines = JSON.parse(data);
+      // Convert string dates back to Date objects
+      return magazines.map((magazine: any) => ({
+        ...magazine,
+        publishDate: new Date(magazine.publishDate),
+      }));
+    }
+    return [];
+  } catch (error) {
+    console.warn("Could not read magazines from JSON file:", error);
+    return [];
+  }
+}
+
+// Get all magazines from both filesystem and JSON file
 export function getAllMagazines(): Magazine[] {
+  // Get magazines from filesystem (existing method)
   const filenames = safeReadDir(magazinesDirectory);
-  
-  return filenames.map(filename => {
+  const filesystemMagazines = filenames.map((filename) => {
     const { year, month, week, publishDate } = extractDateInfo(filename);
-    
+
     return {
-      id: filename.replace(/\.pdf$/i, ''),
-      title: filename.replace(/\.pdf$/i, '').replace(/-/g, ' '),
+      id: filename.replace(/\.pdf$/i, ""),
+      title: filename.replace(/\.pdf$/i, "").replace(/-/g, " "),
       year,
       month,
-      week,
+      week: week || "Unknown",
+      description: `Magazine from ${month} ${year}`,
       filePath: path.join(magazinesDirectory, filename),
       fileUrl: `/docs/magazines/${filename}`,
-      publishDate
+      publishDate,
     };
-  }).sort((a, b) => {
-    // Sort by year (descending), then by month (descending), then by week (descending)
+  });
+
+  // Get magazines from JSON file (new method)
+  const jsonMagazines = readMagazinesFromJson();
+
+  // Combine both sources, avoiding duplicates by ID
+  const allMagazines = [...filesystemMagazines];
+  jsonMagazines.forEach((jsonMagazine) => {
+    if (!allMagazines.find((m) => m.id === jsonMagazine.id)) {
+      allMagazines.push(jsonMagazine);
+    }
+  });
+
+  // Sort by year (descending), then by month (descending), then by week (descending)
+  return allMagazines.sort((a, b) => {
     if (a.year !== b.year) {
       return parseInt(b.year) - parseInt(a.year);
     }
-    
+
     const aMonthNum = getMonthNumber(a.month);
     const bMonthNum = getMonthNumber(b.month);
-    
+
     if (aMonthNum !== bMonthNum) {
       return bMonthNum - aMonthNum;
     }
-    
+
     return b.publishDate.getTime() - a.publishDate.getTime();
   });
 }
@@ -56,18 +99,20 @@ export function getAllMagazines(): Magazine[] {
 export function getMagazinesByYear(): MagazineGroup[] {
   const allMagazines = getAllMagazines();
   const magazinesByYear: Record<string, Magazine[]> = {};
-  
-  allMagazines.forEach(magazine => {
+
+  allMagazines.forEach((magazine) => {
     if (!magazinesByYear[magazine.year]) {
       magazinesByYear[magazine.year] = [];
     }
     magazinesByYear[magazine.year].push(magazine);
   });
-  
+
   return Object.entries(magazinesByYear)
     .map(([year, magazines]) => ({
       year,
-      magazines: magazines.sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime())
+      magazines: magazines.sort(
+        (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
+      ),
     }))
     .sort((a, b) => parseInt(b.year) - parseInt(a.year));
 }
@@ -76,22 +121,24 @@ export function getMagazinesByYear(): MagazineGroup[] {
 export function getMagazinesByMonth(): MagazineByMonth[] {
   const allMagazines = getAllMagazines();
   const magazinesByMonth: Record<string, Magazine[]> = {};
-  
-  allMagazines.forEach(magazine => {
+
+  allMagazines.forEach((magazine) => {
     const key = `${magazine.year}-${magazine.month}`;
     if (!magazinesByMonth[key]) {
       magazinesByMonth[key] = [];
     }
     magazinesByMonth[key].push(magazine);
   });
-  
+
   return Object.entries(magazinesByMonth)
     .map(([key, magazines]) => {
-      const [year, month] = key.split('-');
+      const [year, month] = key.split("-");
       return {
         year,
         month,
-        magazines: magazines.sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime())
+        magazines: magazines.sort(
+          (a, b) => b.publishDate.getTime() - a.publishDate.getTime()
+        ),
       };
     })
     .sort((a, b) => {
@@ -106,25 +153,29 @@ export function getMagazinesByMonth(): MagazineByMonth[] {
 // Get a specific magazine by ID
 export function getMagazineById(id: string): Magazine | null {
   const allMagazines = getAllMagazines();
-  return allMagazines.find(magazine => magazine.id === id) || null;
+  return allMagazines.find((magazine) => magazine.id === id) || null;
 }
 
 // Get years that have magazines
 export function getAvailableYears(): string[] {
   const allMagazines = getAllMagazines();
-  const years = Array.from(new Set(allMagazines.map(magazine => magazine.year)));
+  const years = Array.from(
+    new Set(allMagazines.map((magazine) => magazine.year))
+  );
   return years.sort((a, b) => parseInt(b) - parseInt(a));
 }
 
 // Get months for a specific year
 export function getAvailableMonthsForYear(year: string): string[] {
   const allMagazines = getAllMagazines();
-  const months = Array.from(new Set(
-    allMagazines
-      .filter(magazine => magazine.year === year)
-      .map(magazine => magazine.month)
-  ));
-  
+  const months = Array.from(
+    new Set(
+      allMagazines
+        .filter((magazine) => magazine.year === year)
+        .map((magazine) => magazine.month)
+    )
+  );
+
   return months.sort((a, b) => getMonthNumber(b) - getMonthNumber(a));
 }
 
@@ -132,10 +183,11 @@ export function getAvailableMonthsForYear(year: string): string[] {
 export function searchMagazines(query: string): Magazine[] {
   const allMagazines = getAllMagazines();
   const lowercaseQuery = query.toLowerCase();
-  
-  return allMagazines.filter(magazine => 
-    magazine.title.toLowerCase().includes(lowercaseQuery) ||
-    magazine.year.includes(query) ||
-    magazine.month.toLowerCase().includes(lowercaseQuery)
+
+  return allMagazines.filter(
+    (magazine) =>
+      magazine.title.toLowerCase().includes(lowercaseQuery) ||
+      magazine.year.includes(query) ||
+      magazine.month.toLowerCase().includes(lowercaseQuery)
   );
 }

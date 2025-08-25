@@ -1,28 +1,34 @@
-import Navbar from '@/components/Navbar';
-import Topbar from '@/components/Topbar';
-import Footer from '@/components/Sections/Footer';
-import Link from 'next/link';
-import { getAllSubjects } from '@/utils/pastPapersServerUtils';
-import { 
-  PiExamBold, 
+import Navbar from "@/components/Navbar";
+import Topbar from "@/components/Topbar";
+import Footer from "@/components/Sections/Footer";
+import Link from "next/link";
+import {
+  PiExamBold,
   PiBuildings,
   PiBookOpenTextBold,
-  PiGraduationCapBold
-} from 'react-icons/pi';
+  PiGraduationCapBold,
+} from "react-icons/pi";
+import { getAllAdminSubjects } from "@/utils/pastPapersAdminUtils";
 
 export const metadata = {
-  title: 'CSS & PMS Past Papers | ICEP Institute',
-  description: 'Access a comprehensive collection of CSS and PMS past papers. Choose between Central Superior Services (CSS) or Provincial Management Service (PMS) exam preparations.',
+  title: "CSS & PMS Past Papers | ICEP Institute",
+  description:
+    "Access a comprehensive collection of CSS and PMS past papers. Choose between Central Superior Services (CSS) or Provincial Management Service (PMS) exam preparations.",
 };
 
 export default async function PastPapersPage() {
-  // Get all unique subjects to show counts
-  const subjectsObject = await getAllSubjects();
+  const adminSubjectObject = await getAllAdminSubjects();
+  const uniqueCompulsorySubjects = Array.from(
+    new Map(adminSubjectObject.css.comp.map((s) => [s.name, s])).values()
+  );
+  const uniqueOptionalSubjects = Array.from(
+    new Map(adminSubjectObject.css.optional.map((s) => [s.name, s])).values()
+  );
   return (
     <>
       <Topbar />
       <Navbar />
-      
+
       <main className="min-h-screen">
         {/* Hero section */}
         <section className="bg-brand-blue text-white py-16 md:py-24">
@@ -31,18 +37,19 @@ export default async function PastPapersPage() {
               Past Papers
             </h1>
             <p className="text-brand-blue-100 text-lg max-w-3xl">
-              Choose your examination type to access a comprehensive collection of past papers. 
+              Choose your examination type to access a comprehensive collection
+              of past papers.
             </p>
           </div>
         </section>
-        
+
         {/* Exam Options */}
         <section className="py-10 bg-brand-white">
           <div className="container mx-auto px-6 md:px-12">
             <h2 className="text-3xl font-bold heading-font text-brand-blue mb-12 text-center">
               Select Your Examination
             </h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {/* CSS Card */}
               <Link href="/css-past-papers">
@@ -53,17 +60,23 @@ export default async function PastPapersPage() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold">CSS Papers</h3>
-                      <p className="text-brand-blue-100">Central Superior Services</p>
+                      <p className="text-brand-blue-100">
+                        Central Superior Services
+                      </p>
                     </div>
                   </div>
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center bg-white/10 rounded p-3">
                       <span>Compulsory Subjects</span>
-                      <span className="font-semibold">{subjectsObject.css.comp.length}</span>
+                      <span className="font-semibold">
+                        {uniqueCompulsorySubjects.length}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center bg-white/10 rounded p-3">
                       <span>Optional Subjects</span>
-                      <span className="font-semibold">{subjectsObject.css.optional.length}</span>
+                      <span className="font-semibold">
+                        {uniqueOptionalSubjects.length}
+                      </span>
                     </div>
                   </div>
                   <div className="text-center">
@@ -83,17 +96,23 @@ export default async function PastPapersPage() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold">PMS Papers</h3>
-                      <p className="text-green-100">Provincial Management Service</p>
+                      <p className="text-green-100">
+                        Provincial Management Service
+                      </p>
                     </div>
                   </div>
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between items-center bg-white/10 rounded p-3">
                       <span>Compulsory Subjects</span>
-                      <span className="font-semibold">{subjectsObject.pms.comp.length}</span>
+                      <span className="font-semibold">
+                        {adminSubjectObject.pms.comp.length}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center bg-white/10 rounded p-3">
                       <span>Optional Subjects</span>
-                      <span className="font-semibold">{subjectsObject.pms.optional.length}</span>
+                      <span className="font-semibold">
+                        {adminSubjectObject.pms.optional.length}
+                      </span>
                     </div>
                   </div>
                   <div className="text-center">
@@ -115,30 +134,45 @@ export default async function PastPapersPage() {
                 <div className="w-16 h-16 bg-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
                   <PiBookOpenTextBold className="text-2xl text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-brand-blue mb-3">Comprehensive Collection</h3>
-                <p className="text-gray-600">Access past papers from multiple years with detailed categorization by subjects and exam types.</p>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">
+                  Comprehensive Collection
+                </h3>
+                <p className="text-gray-600">
+                  Access past papers from multiple years with detailed
+                  categorization by subjects and exam types.
+                </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <PiGraduationCapBold className="text-2xl text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-brand-blue mb-3">Exam Pattern Analysis</h3>
-                <p className="text-gray-600">Understand question patterns and marking schemes through systematic practice with real papers.</p>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">
+                  Exam Pattern Analysis
+                </h3>
+                <p className="text-gray-600">
+                  Understand question patterns and marking schemes through
+                  systematic practice with real papers.
+                </p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-16 h-16 bg-brand-yellow rounded-full flex items-center justify-center mx-auto mb-4">
                   <PiExamBold className="text-2xl text-brand-blue" />
                 </div>
-                <h3 className="text-xl font-bold text-brand-blue mb-3">Regular Updates</h3>
-                <p className="text-gray-600">Stay updated with the latest papers and examination trends for better preparation.</p>
+                <h3 className="text-xl font-bold text-brand-blue mb-3">
+                  Regular Updates
+                </h3>
+                <p className="text-gray-600">
+                  Stay updated with the latest papers and examination trends for
+                  better preparation.
+                </p>
               </div>
             </div>
           </div>
         </section>
       </main>
-      
+
       <Footer />
     </>
   );

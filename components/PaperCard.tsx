@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { PiFilePdf } from 'react-icons/pi';
-import { formatSubjectForUrl } from '@/utils/pastPapersTypes';
-import type { PastPaper } from '@/utils/pastPapersUtils';
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { PiFilePdf } from "react-icons/pi";
+import { formatSubjectForUrl } from "@/utils/pastPapersTypes";
+import type { PastPaper } from "@/utils/pastPapersUtils";
 
 interface PaperCardProps {
   paper: PastPaper;
@@ -12,8 +12,8 @@ interface PaperCardProps {
 }
 
 const PaperCard = ({ paper, index }: PaperCardProps) => {
-  const urlSubject = formatSubjectForUrl(paper.subject.name);
-  
+  const urlSubject = formatSubjectForUrl(paper.subject);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,7 @@ const PaperCard = ({ paper, index }: PaperCardProps) => {
           <div className="text-3xl text-brand-red">
             <PiFilePdf />
           </div>
-          
+
           <div className="flex-1">
             <h3 className="font-medium text-brand-blue-800">
               {paper.subject.name}

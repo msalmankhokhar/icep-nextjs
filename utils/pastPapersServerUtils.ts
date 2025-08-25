@@ -3,6 +3,7 @@ import 'server-only';
 import * as fs from 'node:fs';
 import * as path from 'node:path';
 import { PastPaper, PastPaperSubject } from './pastPapersTypes';
+import { getAllPastPapers } from './pastPapersAdminUtils';
 
 // Map file names to cleaner subject names
 const subjectNameMap: Record<string, string> = {
@@ -85,89 +86,88 @@ export function extractSubjectName(filename: string): string {
   return subjectName;
 }
 
-export function generatePastPapersList({ fileNames, subject, parentDir, parentPath }: { fileNames: string[], subject: PastPaperSubject, parentDir: string, parentPath: string }): PastPaper[] {
+// export function generatePastPapersList({ fileNames, subject, parentDir, parentPath }: { fileNames: string[], subject: PastPaperSubject, parentDir: string, parentPath: string }): PastPaper[] {
 
-  const pastPapersList = fileNames.map(fileName => {
-    const id = fileName.replace(/\.pdf$/, '');
-    const { year, yearRange } = extractYearInfo(id);
+//   const pastPapersList = fileNames.map(fileName => {
+//     const id = fileName.replace(/\.pdf$/, '');
+//     const { year, yearRange } = extractYearInfo(id);
 
-    return {
-      id,
-      title: `${subject.name} (${yearRange})`,
-      subject: subject,
-      year,
-      yearRange,
-      filePath: path.join(parentDir, fileName),
-      fileUrl: `/docs/past_papers/${parentPath}${fileName}`,
-    };
-  });
+//     return {
+//       id,
+//       title: `${subject.name} (${yearRange})`,
+//       subject: subject,
+//       year,
+//       yearRange,
+//       filePath: path.join(parentDir, fileName),
+//       fileUrl: `/docs/past_papers/${parentPath}${fileName}`,
+//     };
+//   });
 
-  return pastPapersList;
-}
+//   return pastPapersList;
+// }
 
-// Load all past papers
-export function getAllPastPapers(): PastPaper[] {
+// // Load all past papers
+// export function getAllPastPapers(): PastPaper[] {
 
-  const pastPapers = []
-  for (const subject of cssCompSubjectNames) {
-    const parentDir = path.join(cssCompPastPapersDirectory, subject);
-    const parentPath = `css_past_papers/comp/${subject}/`;
-    const fileNames = safeReadDir(parentDir);
-    const subjectData: PastPaperSubject = {
-      name: subject,
-      type: 'compulsory',
-      Exam: 'CSS'
-    };
-    const cssCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
-    pastPapers.push(...cssCompPastPapers);
-  }
+//   const pastPapers = []
+//   for (const subject of cssCompSubjectNames) {
+//     const parentDir = path.join(cssCompPastPapersDirectory, subject);
+//     const parentPath = `css_past_papers/comp/${subject}/`;
+//     const fileNames = safeReadDir(parentDir);
+//     const subjectData: PastPaperSubject = {
+//       name: subject,
+//       type: 'compulsory',
+//       Exam: 'CSS'
+//     };
+//     const cssCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
+//     pastPapers.push(...cssCompPastPapers);
+//   }
 
-  for (const subject of cssOptionalSubjectNames) {
-    const parentDir = path.join(cssOptionalPastPapersDirectory, subject);
-    const parentPath = `css_past_papers/optional/${subject}/`;
-    const fileNames = safeReadDir(parentDir);
-    const subjectData: PastPaperSubject = {
-      name: subject,
-      type: 'optional',
-      Exam: 'CSS'
-    };
-    const cssOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
-    pastPapers.push(...cssOptionalPastPapers);
-  }
+//   for (const subject of cssOptionalSubjectNames) {
+//     const parentDir = path.join(cssOptionalPastPapersDirectory, subject);
+//     const parentPath = `css_past_papers/optional/${subject}/`;
+//     const fileNames = safeReadDir(parentDir);
+//     const subjectData: PastPaperSubject = {
+//       name: subject,
+//       type: 'optional',
+//       Exam: 'CSS'
+//     };
+//     const cssOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
+//     pastPapers.push(...cssOptionalPastPapers);
+//   }
 
-  for (const subject of pmsCompSubjectNames) {
-    const parentDir = path.join(pmsCompPastPapersDirectory, subject);
-    const parentPath = `pms_past_papers/comp/${subject}/`;
-    const fileNames = safeReadDir(parentDir);
-    const subjectData: PastPaperSubject = {
-      name: subject,
-      type: 'compulsory',
-      Exam: 'PMS'
-    };
-    const pmsCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
-    pastPapers.push(...pmsCompPastPapers);
-  }
+//   for (const subject of pmsCompSubjectNames) {
+//     const parentDir = path.join(pmsCompPastPapersDirectory, subject);
+//     const parentPath = `pms_past_papers/comp/${subject}/`;
+//     const fileNames = safeReadDir(parentDir);
+//     const subjectData: PastPaperSubject = {
+//       name: subject,
+//       type: 'compulsory',
+//       Exam: 'PMS'
+//     };
+//     const pmsCompPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
+//     pastPapers.push(...pmsCompPastPapers);
+//   }
 
-  for (const subject of pmsOptionalSubjectNames) {
-    const parentDir = path.join(pmsOptionalPastPapersDirectory, subject);
-    const parentPath = `pms_past_papers/optional/${subject}/`;
-    const fileNames = safeReadDir(parentDir);
-    const subjectData: PastPaperSubject = {
-      name: subject,
-      type: 'optional',
-      Exam: 'PMS'
-    };
-    const pmsOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
-    pastPapers.push(...pmsOptionalPastPapers);
-  }
+//   for (const subject of pmsOptionalSubjectNames) {
+//     const parentDir = path.join(pmsOptionalPastPapersDirectory, subject);
+//     const parentPath = `pms_past_papers/optional/${subject}/`;
+//     const fileNames = safeReadDir(parentDir);
+//     const subjectData: PastPaperSubject = {
+//       name: subject,
+//       type: 'optional',
+//       Exam: 'PMS'
+//     };
+//     const pmsOptionalPastPapers = generatePastPapersList({ fileNames, subject: subjectData, parentDir, parentPath });
+//     pastPapers.push(...pmsOptionalPastPapers);
+//   }
 
-  return pastPapers
-}
+//   return pastPapers
+// }
 
 // Get papers for a specific subject
 export async function getPapersBySubject(subject: string): Promise<PastPaper[]> {
-  const allPapers = getAllPastPapers();
-
+  const allPapers = getAllPastPapers()
   // Find the standardized subject name if it exists
   let standardizedSubject = subject;
   for (const [value] of Object.entries(subjectNameMap)) {
@@ -178,7 +178,7 @@ export async function getPapersBySubject(subject: string): Promise<PastPaper[]> 
   }
 
   return allPapers.filter(paper =>
-    paper.subject.name.toLowerCase() === standardizedSubject.toLowerCase()
+    paper.subject.toLowerCase() === standardizedSubject.toLowerCase()
   );
 }
 

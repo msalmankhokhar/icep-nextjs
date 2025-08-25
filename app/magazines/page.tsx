@@ -1,28 +1,35 @@
-import React from 'react';
-import Link from 'next/link';
-import { getMagazinesByYear, getAvailableYears } from '@/utils/magazinesServerUtils';
-import { formatMonthName } from '@/utils/magazinesTypes';
-import Navbar from '@/components/Navbar';
-import Topbar from '@/components/Topbar';
-import Footer from '@/components/Sections/Footer';
-import { Metadata } from 'next';
-import { 
+import React from "react";
+import Link from "next/link";
+import {
+  getMagazinesByYear,
+  getAvailableYears,
+} from "@/utils/magazinesServerUtils";
+import { formatMonthName } from "@/utils/magazinesTypes";
+import Navbar from "@/components/Navbar";
+import Topbar from "@/components/Topbar";
+import Footer from "@/components/Sections/Footer";
+import { Metadata } from "next";
+import {
   PiBookBookmarkBold,
   PiCalendarBold,
   PiDownloadBold,
-  PiArrowRightBold
-} from 'react-icons/pi';
+  PiArrowRightBold,
+} from "react-icons/pi";
 
 export const metadata: Metadata = {
-  title: 'ICEP Magazines - Educational Resources',
-  description: 'Access comprehensive ICEP magazines organized by year and month. Download educational resources and stay updated with the latest content.',
-  keywords: 'ICEP magazines, educational resources, monthly magazines, download magazines',
+  title: "ICEP Magazines - Educational Resources",
+  description:
+    "Access comprehensive ICEP magazines organized by year and month. Download educational resources and stay updated with the latest content.",
+  keywords:
+    "ICEP magazines, educational resources, monthly magazines, download magazines",
 };
 
 export default function MagazinesPage() {
   const magazinesByYear = getMagazinesByYear();
+  console.log(magazinesByYear)
   const availableYears = getAvailableYears();
-
+  console.log(availableYears)
+  
   return (
     <>
       <Topbar />
@@ -33,11 +40,13 @@ export default function MagazinesPage() {
           <div className="container mx-auto px-6 md:px-12">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-brand-blue-200 mb-4">
-              <Link href="/" className="hover:text-brand-blue-100">Home</Link>
+              <Link href="/" className="hover:text-brand-blue-100">
+                Home
+              </Link>
               <span>/</span>
               <span>Magazines</span>
             </div>
-            
+
             <div className="flex items-center gap-4 mb-6">
               <PiBookBookmarkBold className="text-4xl text-brand-yellow" />
               <h1 className="text-3xl md:text-4xl font-bold heading-font">
@@ -45,19 +54,24 @@ export default function MagazinesPage() {
               </h1>
             </div>
             <p className="text-brand-blue-100 text-lg max-w-3xl mb-8">
-              Comprehensive educational resources and insights to enhance your learning journey. 
-              Access the latest magazines with valuable content and knowledge.
+              Comprehensive educational resources and insights to enhance your
+              learning journey. Access the latest magazines with valuable
+              content and knowledge.
             </p>
-            
+
             {/* Statistics */}
             <div className="flex flex-wrap gap-6">
               <div className="bg-brand-blue-700 rounded-lg px-6 py-4">
                 <div className="flex items-center gap-3">
                   <PiCalendarBold className="text-2xl text-brand-yellow" />
                   <div>
-                    <div className="text-sm text-brand-blue-200">Available Years</div>
+                    <div className="text-sm text-brand-blue-200">
+                      Available Years
+                    </div>
                     <div className="text-xl font-bold">
-                      {availableYears.length > 0 ? availableYears.join(', ') : 'No magazines available'}
+                      {availableYears.length > 0
+                        ? availableYears.join(", ")
+                        : "No magazines available"}
                     </div>
                   </div>
                 </div>
@@ -66,17 +80,23 @@ export default function MagazinesPage() {
                 <div className="flex items-center gap-3">
                   <PiDownloadBold className="text-2xl text-brand-yellow" />
                   <div>
-                    <div className="text-sm text-brand-blue-200">Total Issues</div>
+                    <div className="text-sm text-brand-blue-200">
+                      Total Issues
+                    </div>
                     <div className="text-xl font-bold">
-                      {magazinesByYear.reduce((total, yearGroup) => total + yearGroup.magazines.length, 0)}
+                      {magazinesByYear.reduce(
+                        (total, yearGroup) =>
+                          total + yearGroup.magazines.length,
+                        0
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </section>        
-        
+        </section>
+
         {/* Main Content */}
         <section className="py-12 md:py-20 bg-brand-white">
           <div className="container mx-auto px-6 md:px-12">
@@ -84,9 +104,12 @@ export default function MagazinesPage() {
               <div className="text-center py-16">
                 <div className="bg-white rounded-xl shadow-lg p-12 max-w-md mx-auto border border-brand-blue-100">
                   <div className="text-6xl mb-6">📰</div>
-                  <h2 className="text-2xl font-bold text-brand-blue mb-4">No Magazines Available</h2>
+                  <h2 className="text-2xl font-bold text-brand-blue mb-4">
+                    No Magazines Available
+                  </h2>
                   <p className="text-brand-blue-600">
-                    Magazines will be added soon. Please check back later for the latest educational resources.
+                    Magazines will be added soon. Please check back later for
+                    the latest educational resources.
                   </p>
                 </div>
               </div>
@@ -97,12 +120,15 @@ export default function MagazinesPage() {
                     {/* Year Header */}
                     <div className="flex items-center gap-3 mb-8">
                       <div className="w-1 h-8 bg-brand-yellow rounded-full"></div>
-                      <h2 className="text-3xl font-bold heading-font text-brand-blue">{yearGroup.year}</h2>
+                      <h2 className="text-3xl font-bold heading-font text-brand-blue">
+                        {yearGroup.year}
+                      </h2>
                       <div className="flex-1 h-px bg-brand-blue-200"></div>
                       <span className="text-brand-blue-600 font-medium">
-                        {yearGroup.magazines.length} issue{yearGroup.magazines.length !== 1 ? 's' : ''} available
+                        {yearGroup.magazines.length} issue
+                        {yearGroup.magazines.length !== 1 ? "s" : ""} available
                       </span>
-                    </div>                    
+                    </div>
                     {/* Magazines Grid */}
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                       {yearGroup.magazines.map((magazine) => (
@@ -134,14 +160,27 @@ export default function MagazinesPage() {
                               </div>
                             )}
                             <div className="flex items-center text-sm text-brand-blue-600">
-                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              <svg
+                                className="w-4 h-4 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
                               </svg>
-                              {magazine.publishDate.toLocaleDateString('en-US', { 
-                                year: 'numeric', 
-                                month: 'long', 
-                                day: 'numeric' 
-                              })}
+                              {magazine.publishDate.toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "long",
+                                  day: "numeric",
+                                }
+                              )}
                             </div>
                           </div>
 
@@ -151,9 +190,24 @@ export default function MagazinesPage() {
                               href={`/magazines/${magazine.id}`}
                               className="w-full bg-brand-blue text-white py-3 px-4 rounded-lg font-medium hover:bg-brand-blue-700 transition-all duration-300 flex items-center justify-center group-hover:shadow-md"
                             >
-                              <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              <svg
+                                className="w-4 h-4 mr-2"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                />
                               </svg>
                               View Magazine
                             </Link>
@@ -181,14 +235,18 @@ export default function MagazinesPage() {
                 <div className="bg-brand-blue-50 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
                   <PiBookBookmarkBold className="text-2xl text-brand-blue" />
                 </div>
-                <h2 className="text-2xl font-bold text-brand-blue mb-4 heading-font">About ICEP Magazines</h2>
+                <h2 className="text-2xl font-bold text-brand-blue mb-4 heading-font">
+                  About ICEP Magazines
+                </h2>
                 <p className="text-brand-blue-600 max-w-3xl mx-auto leading-relaxed">
-                  Our magazines provide comprehensive educational content, insights, and resources to help students 
-                  and professionals stay updated with the latest developments in their fields. Each issue is carefully 
-                  curated to deliver valuable information and knowledge.
+                  Our magazines provide comprehensive educational content,
+                  insights, and resources to help students and professionals
+                  stay updated with the latest developments in their fields.
+                  Each issue is carefully curated to deliver valuable
+                  information and knowledge.
                 </p>
                 <div className="mt-6">
-                  <Link 
+                  <Link
                     href="/about"
                     className="inline-flex items-center text-brand-blue hover:text-brand-blue-700 font-medium transition-colors"
                   >
